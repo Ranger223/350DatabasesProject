@@ -136,3 +136,257 @@ INSERT INTO [dbo].[CELESTIALBODY]
            (74, 'GJ 832 B', 2.334, 1.146, 0.551, 14)
 GO
 SET IDENTITY_INSERT CELESTIALBODY OFF
+SET IDENTITY_INSERT ORBITALSYSTEM ON
+
+INSERT INTO [dbo].[ORBITALSYSTEM]
+           ( [OrbSysID]
+		   ,[OrbSysName]
+           ,[CelBodyID])
+     VALUES
+           (0,'None',0),
+           (1, 'Sol', 1),
+           (2, 'Proxima Centari', 11),
+		   (3, 'Epsilon Eridani', 15),
+           (4, 'GJ 887', 17),
+           (5, 'Ross 128', 20),
+           (6, 'GJ 15', 22),
+           (7, 'Tau Ceti', 25),
+           (8, 'Epsilon Indi', 30),
+           (9, 'GJ 1061', 32),
+           (10, 'YZ Ceti', 36),
+           (11, 'Teegarden''s System', 40),
+           (12, 'Kapteyn', 43),
+           (13, 'Wolf 1061', 46),
+           (14, 'GJ 674', 58),
+           (15, 'GJ 687', 60),
+           (16, 'GJ 876', 63),
+           (17, 'GJ 1002', 68),
+           (18, 'GJ 832', 72)
+GO
+
+SET IDENTITY_INSERT ORBITALSYSTEM OFF
+
+USE [Milestone3]
+GO
+
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 0
+ WHERE CelBodyID = 0
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 1
+ WHERE CelBodyID = 1
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 1
+ WHERE CelBodyID = 2
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 1
+ WHERE CelBodyID = 3
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 1
+ WHERE CelBodyID = 4
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 1
+ WHERE CelBodyID = 5
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 1
+ WHERE CelBodyID = 6
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 1
+ WHERE CelBodyID = 7
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 1
+ WHERE CelBodyID = 8
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 1
+ WHERE CelBodyID = 9
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 1
+ WHERE CelBodyID = 10
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 2
+ WHERE CelBodyID = 11
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 2
+ WHERE CelBodyID = 12
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 2
+ WHERE CelBodyID = 13
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 2
+ WHERE CelBodyID = 14
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 3
+ WHERE CelBodyID = 15
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 3
+ WHERE CelBodyID = 16
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 4
+ WHERE CelBodyID = 17
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 4
+ WHERE CelBodyID = 18
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 4
+ WHERE CelBodyID = 19
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 5
+ WHERE CelBodyID = 20
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 5
+ WHERE CelBodyID = 21
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 6
+ WHERE CelBodyID = 22
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 6
+ WHERE CelBodyID = 23
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 6
+ WHERE CelBodyID = 24
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 7
+ WHERE CelBodyID = 25
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 7
+ WHERE CelBodyID = 26
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 7
+ WHERE CelBodyID = 27
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 7
+ WHERE CelBodyID = 28
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 7
+ WHERE CelBodyID = 29
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 8
+ WHERE CelBodyID = 30
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 8
+ WHERE CelBodyID = 31
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 9
+ WHERE CelBodyID = 32
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 9
+ WHERE CelBodyID = 33
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 9
+ WHERE CelBodyID = 34
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 9
+ WHERE CelBodyID = 35
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 10
+ WHERE CelBodyID = 36
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 10
+ WHERE CelBodyID = 37
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 10
+ WHERE CelBodyID = 38
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 10
+ WHERE CelBodyID = 39
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 11
+ WHERE CelBodyID = 40
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 11
+ WHERE CelBodyID = 41
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 11
+ WHERE CelBodyID = 42
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 12
+ WHERE CelBodyID = 43
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 12
+ WHERE CelBodyID = 44
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 12
+ WHERE CelBodyID = 45
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 13
+ WHERE CelBodyID = 46
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 13
+ WHERE CelBodyID = 47
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 13
+ WHERE CelBodyID = 48
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 13
+ WHERE CelBodyID = 49
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 0
+ WHERE CelBodyID = 50
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 0
+ WHERE CelBodyID = 51
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 0
+ WHERE CelBodyID = 52
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 0
+ WHERE CelBodyID = 53
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 8
+ WHERE CelBodyID = 54
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 8
+ WHERE CelBodyID = 55
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 14
+ WHERE CelBodyID = 56
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 14
+ WHERE CelBodyID = 57
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 15
+ WHERE CelBodyID = 58
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 15
+ WHERE CelBodyID = 59
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 15
+ WHERE CelBodyID = 60
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 16
+ WHERE CelBodyID = 61
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 16
+ WHERE CelBodyID = 62
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 16
+ WHERE CelBodyID = 63
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 16
+ WHERE CelBodyID = 64
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 16
+ WHERE CelBodyID = 65
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 17
+ WHERE CelBodyID = 66
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 17
+ WHERE CelBodyID = 67
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 17
+ WHERE CelBodyID = 68
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 17
+ WHERE CelBodyID = 69
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 18
+ WHERE CelBodyID = 70
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 18
+ WHERE CelBodyID = 71
+UPDATE [dbo].[CELESTIALBODY]
+   SET [OSystemID] = 18
+ WHERE CelBodyID = 72
+
+GO
