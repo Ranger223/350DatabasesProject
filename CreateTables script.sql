@@ -13,8 +13,8 @@ CREATE TABLE [dbo].[HABITABILITY](
 
 CREATE TABLE [dbo].[DBUSER](
 	[UID] [int] IDENTITY(1,1) NOT NULL,
-	[Username] [char](32) NOT NULL,
-	[Email] [char](64) NOT NULL,
+	[Username] [varchar](32) NOT NULL,
+	[Email] [varchar](64) NOT NULL,
 	[PasswordHash] [varchar](80) NULL,
 	[Clearance] [int] NOT NULL,
 	[FacID] [int] NULL,
