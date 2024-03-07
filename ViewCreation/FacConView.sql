@@ -1,22 +1,22 @@
 USE [Milestone3]
 GO
 
-/****** Object:  View [dbo].[CelBodyView]    Script Date: 3/7/2024 10:54:46 AM ******/
+/****** Object:  View [dbo].[FacConView]    Script Date: 3/7/2024 11:05:50 AM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE VIEW [dbo].[CelBodyView]
+CREATE VIEW [dbo].[FacConView]
 AS
-SELECT        dbo.CELESTIALBODY.CelBodyName, dbo.CELESTIALBODY.Mass, dbo.CELESTIALBODY.Radius, dbo.CELESTIALBODY.OrbitalDistance, dbo.ORBITALSYSTEM.OrbSysName, dbo.CelBodTYPE.CelBodyTypeName, 
-                         dbo.HABITABILITY.HabName, dbo.HABITABILITY.Colonizable, (CASE WHEN dbo.FACTION.FactionName IS NULL THEN 'Independent' ELSE dbo.FACTION.FactionName END) AS Expr1
+SELECT        dbo.FACTION.FactionName, dbo.ORBITALSYSTEM.OrbSysName, dbo.CELESTIALBODY.CelBodyName, dbo.CELESTIALBODY.Mass, dbo.CELESTIALBODY.Radius, dbo.CELESTIALBODY.OrbitalDistance, 
+                         dbo.CelBodTYPE.CelBodyTypeName, dbo.HABITABILITY.HabName, dbo.HABITABILITY.Colonizable
 FROM            dbo.CelBodTYPE INNER JOIN
-                         dbo.HABITABILITY ON dbo.CelBodTYPE.HabID = dbo.HABITABILITY.HabID RIGHT OUTER JOIN
-                         dbo.CELESTIALBODY ON dbo.CelBodTYPE.CelBodyTypeID = dbo.CELESTIALBODY.CelBodyTypeID LEFT OUTER JOIN
+                         dbo.CELESTIALBODY ON dbo.CelBodTYPE.CelBodyTypeID = dbo.CELESTIALBODY.CelBodyTypeID INNER JOIN
+                         dbo.HABITABILITY ON dbo.CelBodTYPE.HabID = dbo.HABITABILITY.HabID INNER JOIN
                          dbo.ORBITALSYSTEM ON dbo.CELESTIALBODY.OSystemID = dbo.ORBITALSYSTEM.OrbSysID AND dbo.CELESTIALBODY.CelBodyID = dbo.ORBITALSYSTEM.CelBodyID AND 
-                         dbo.CELESTIALBODY.CelBodyID = dbo.ORBITALSYSTEM.CelBodyID LEFT OUTER JOIN
+                         dbo.CELESTIALBODY.CelBodyID = dbo.ORBITALSYSTEM.CelBodyID RIGHT OUTER JOIN
                          dbo.FACTION INNER JOIN
                          dbo.FACTIONCONTROLS ON dbo.FACTION.FacID = dbo.FACTIONCONTROLS.FacID AND dbo.FACTION.FacID = dbo.FACTIONCONTROLS.FacID ON dbo.CELESTIALBODY.CelBodyID = dbo.FACTIONCONTROLS.CBID AND 
                          dbo.CELESTIALBODY.CelBodyID = dbo.FACTIONCONTROLS.CBID
@@ -93,42 +93,12 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "HABITABILITY"
-            Begin Extent = 
-               Top = 190
-               Left = 469
-               Bottom = 303
-               Right = 639
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "CelBodTYPE"
-            Begin Extent = 
-               Top = 166
-               Left = 257
-               Bottom = 279
-               Right = 447
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "ORBITALSYSTEM"
-            Begin Extent = 
-               Top = 161
-               Left = 11
-               Bottom = 274
-               Right = 181
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
          Begin Table = "FACTION"
             Begin Extent = 
-               Top = 18
-               Left = 478
-               Bottom = 114
-               Right = 648
+               Top = 6
+               Left = 38
+               Bottom = 102
+               Right = 208
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -146,9 +116,39 @@ Begin DesignProperties =
          Begin Table = "CELESTIALBODY"
             Begin Extent = 
                Top = 6
-               Left = 38
+               Left = 454
                Bottom = 136
+               Right = 624
+            End
+            DisplayFlags = 280
+            TopColumn = 3
+         End
+         Begin Table = "CelBodTYPE"
+            Begin Extent = 
+               Top = 6
+               Left = 662
+               Bottom = 119
+               Right = 852
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "HABITABILITY"
+            Begin Extent = 
+               Top = 102
+               Left = 38
+               Bottom = 215
                Right = 208
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "ORBITALSYSTEM"
+            Begin Extent = 
+               Top = 102
+               Left = 246
+               Bottom = 215
+               Right = 416
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -160,28 +160,16 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 10
-         Width = 284
-         Width = 1500
-' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'CelBodyView'
-GO
-
-EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane2', @value=N'         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 2385
-      End
    End
    Begin CriteriaPane = 
       Begin ColumnWidths = 11
-         Column = 4095
+         Colum' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'FacConView'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane2', @value=N'n = 1440
          Alias = 900
          Table = 1170
-         Output = 1605
+         Output = 720
          Append = 1400
          NewValue = 1170
          SortType = 1350
@@ -194,9 +182,9 @@ EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane2', @value=N'         Widt
       End
    End
 End
-' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'CelBodyView'
+' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'FacConView'
 GO
 
-EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=2 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'CelBodyView'
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=2 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'FacConView'
 GO
 
