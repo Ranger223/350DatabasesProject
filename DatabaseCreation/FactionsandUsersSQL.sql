@@ -1,4 +1,4 @@
-USE [Milestone3]
+USE [CBIS]
 GO
 
 INSERT INTO [dbo].[FACTION]
@@ -13,7 +13,7 @@ INSERT INTO [dbo].[FACTION]
            ('Fuze'),
            ('Orion Baking Society'),
            ('Enigma Books'),
-           ('Louisville Historical Society'),
+           ('Louisville Historical Society')
 GO
 
 INSERT INTO [dbo].[DBUSER]
@@ -27,8 +27,6 @@ INSERT INTO [dbo].[DBUSER]
            ('werewolfvampire', 'darkfall@spacegmail.com', 1234, 3, NULL)
 GO
 
-USE [Milestone3]
-GO
 SET IDENTITY_INSERT FACTIONCONTROLS ON
 INSERT INTO [dbo].[FACTIONCONTROLS]
            ([FacID],[CBID])
@@ -69,9 +67,3 @@ INSERT INTO [dbo].[FACTIONCONTROLS]
 		   (10, 34),
 		   (10, 35)
 GO
-
-
-
-
-
-
