@@ -1,4 +1,4 @@
-USE [Milestone3]
+USE [CBIS]
 GO
 SET IDENTITY_INSERT HABITABILITY ON
 INSERT INTO [dbo].[HABITABILITY]
@@ -46,7 +46,7 @@ INSERT INTO [dbo].[CelBodTYPE]
 		   (22, 'Hostile Environment', 0),
 		   (23, 'Desert', 0),
 		   (24, 'Ice Giant', 0),
-		   (25, 'Plutoid', 0),
+		   (25, 'Plutoid', 0)
 GO
 SET IDENTITY_INSERT CelBodTYPE OFF
 
@@ -165,9 +165,6 @@ INSERT INTO [dbo].[ORBITALSYSTEM]
 GO
 
 SET IDENTITY_INSERT ORBITALSYSTEM OFF
-
-USE [Milestone3]
-GO
 
 UPDATE [dbo].[CELESTIALBODY]
    SET [OSystemID] = 0
