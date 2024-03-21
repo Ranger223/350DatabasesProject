@@ -1,7 +1,7 @@
 USE [CBIS]
 GO
 
-/****** Object:  View [dbo].[FacConView]    Script Date: 3/7/2024 11:05:50 AM ******/
+/****** Object:  View [dbo].[FacConView]    Script Date: 3/21/2024 2:25:54 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -15,11 +15,11 @@ SELECT        dbo.FACTION.FactionName, dbo.ORBITALSYSTEM.OrbSysName, dbo.CELESTI
 FROM            dbo.CelBodTYPE INNER JOIN
                          dbo.CELESTIALBODY ON dbo.CelBodTYPE.CelBodyTypeID = dbo.CELESTIALBODY.CelBodyTypeID INNER JOIN
                          dbo.HABITABILITY ON dbo.CelBodTYPE.HabID = dbo.HABITABILITY.HabID INNER JOIN
-                         dbo.ORBITALSYSTEM ON dbo.CELESTIALBODY.OSystemID = dbo.ORBITALSYSTEM.OrbSysID AND dbo.CELESTIALBODY.CelBodyID = dbo.ORBITALSYSTEM.CelBodyID AND 
-                         dbo.CELESTIALBODY.CelBodyID = dbo.ORBITALSYSTEM.CelBodyID RIGHT OUTER JOIN
                          dbo.FACTION INNER JOIN
                          dbo.FACTIONCONTROLS ON dbo.FACTION.FacID = dbo.FACTIONCONTROLS.FacID AND dbo.FACTION.FacID = dbo.FACTIONCONTROLS.FacID ON dbo.CELESTIALBODY.CelBodyID = dbo.FACTIONCONTROLS.CBID AND 
-                         dbo.CELESTIALBODY.CelBodyID = dbo.FACTIONCONTROLS.CBID
+                         dbo.CELESTIALBODY.CelBodyID = dbo.FACTIONCONTROLS.CBID LEFT OUTER JOIN
+                         dbo.ORBITALSYSTEM ON dbo.CELESTIALBODY.OSystemID = dbo.ORBITALSYSTEM.OrbSysID AND dbo.CELESTIALBODY.CelBodyID = dbo.ORBITALSYSTEM.CelBodyID AND 
+                         dbo.CELESTIALBODY.CelBodyID = dbo.ORBITALSYSTEM.CelBodyID
 GO
 
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
@@ -93,6 +93,46 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
+         Begin Table = "CelBodTYPE"
+            Begin Extent = 
+               Top = 57
+               Left = 683
+               Bottom = 170
+               Right = 873
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "CELESTIALBODY"
+            Begin Extent = 
+               Top = 6
+               Left = 454
+               Bottom = 136
+               Right = 624
+            End
+            DisplayFlags = 280
+            TopColumn = 3
+         End
+         Begin Table = "HABITABILITY"
+            Begin Extent = 
+               Top = 102
+               Left = 38
+               Bottom = 215
+               Right = 208
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "ORBITALSYSTEM"
+            Begin Extent = 
+               Top = 214
+               Left = 194
+               Bottom = 327
+               Right = 364
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
          Begin Table = "FACTION"
             Begin Extent = 
                Top = 6
@@ -113,46 +153,6 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "CELESTIALBODY"
-            Begin Extent = 
-               Top = 6
-               Left = 454
-               Bottom = 136
-               Right = 624
-            End
-            DisplayFlags = 280
-            TopColumn = 3
-         End
-         Begin Table = "CelBodTYPE"
-            Begin Extent = 
-               Top = 6
-               Left = 662
-               Bottom = 119
-               Right = 852
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "HABITABILITY"
-            Begin Extent = 
-               Top = 102
-               Left = 38
-               Bottom = 215
-               Right = 208
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "ORBITALSYSTEM"
-            Begin Extent = 
-               Top = 102
-               Left = 246
-               Bottom = 215
-               Right = 416
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
       End
    End
    Begin SQLPane = 
@@ -163,10 +163,10 @@ Begin DesignProperties =
    End
    Begin CriteriaPane = 
       Begin ColumnWidths = 11
-         Colum' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'FacConView'
+         Colu' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'FacConView'
 GO
 
-EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane2', @value=N'n = 1440
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane2', @value=N'mn = 1440
          Alias = 900
          Table = 1170
          Output = 720

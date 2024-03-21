@@ -1,7 +1,7 @@
 USE [CBIS]
 GO
 
-/****** Object:  View [dbo].[UserSavedView]    Script Date: 3/7/2024 11:02:44 AM ******/
+/****** Object:  View [dbo].[UserSavedView]    Script Date: 3/21/2024 2:35:42 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -12,16 +12,15 @@ CREATE VIEW [dbo].[UserSavedView]
 AS
 SELECT        dbo.ORBITALSYSTEM.OrbSysName, dbo.CELESTIALBODY.CelBodyName, dbo.CELESTIALBODY.Mass, dbo.CELESTIALBODY.Radius, dbo.CELESTIALBODY.OrbitalDistance, dbo.CelBodTYPE.CelBodyTypeName, 
                          dbo.HABITABILITY.HabName, dbo.HABITABILITY.Colonizable, dbo.FACTION.FactionName
-FROM            dbo.HABITABILITY INNER JOIN
+FROM            dbo.FACTION INNER JOIN
+                         dbo.FACTIONCONTROLS ON dbo.FACTION.FacID = dbo.FACTIONCONTROLS.FacID INNER JOIN
+                         dbo.HABITABILITY INNER JOIN
                          dbo.CELESTIALBODY INNER JOIN
                          dbo.SAVED ON dbo.CELESTIALBODY.CelBodyID = dbo.SAVED.CelBodyID AND dbo.CELESTIALBODY.CelBodyID = dbo.SAVED.CelBodyID INNER JOIN
-                         dbo.ORBITALSYSTEM ON dbo.CELESTIALBODY.OSystemID = dbo.ORBITALSYSTEM.OrbSysID AND dbo.CELESTIALBODY.CelBodyID = dbo.ORBITALSYSTEM.CelBodyID AND 
-                         dbo.CELESTIALBODY.CelBodyID = dbo.ORBITALSYSTEM.CelBodyID INNER JOIN
-                         dbo.CelBodTYPE ON dbo.CELESTIALBODY.CelBodyTypeID = dbo.CelBodTYPE.CelBodyTypeID ON dbo.HABITABILITY.HabID = dbo.CelBodTYPE.HabID LEFT OUTER JOIN
-                         dbo.FACTIONCONTROLS ON dbo.CELESTIALBODY.CelBodyID = dbo.FACTIONCONTROLS.CBID AND dbo.CELESTIALBODY.CelBodyID = dbo.FACTIONCONTROLS.CBID RIGHT OUTER JOIN
-                         dbo.FACTION INNER JOIN
-                         dbo.DBUSER ON dbo.FACTION.FacID = dbo.DBUSER.FacID ON dbo.FACTIONCONTROLS.FacID = dbo.FACTION.FacID AND dbo.FACTIONCONTROLS.FacID = dbo.FACTION.FacID AND dbo.SAVED.UID = dbo.DBUSER.UID AND 
-                         dbo.SAVED.UID = dbo.DBUSER.UID
+                         dbo.ORBITALSYSTEM ON dbo.CELESTIALBODY.OSystemID = dbo.ORBITALSYSTEM.OrbSysID INNER JOIN
+                         dbo.CelBodTYPE ON dbo.CELESTIALBODY.CelBodyTypeID = dbo.CelBodTYPE.CelBodyTypeID ON dbo.HABITABILITY.HabID = dbo.CelBodTYPE.HabID INNER JOIN
+                         dbo.DBUSER ON dbo.SAVED.UID = dbo.DBUSER.UID AND dbo.SAVED.UID = dbo.DBUSER.UID ON dbo.FACTIONCONTROLS.CBID = dbo.CELESTIALBODY.CelBodyID AND 
+                         dbo.FACTIONCONTROLS.CBID = dbo.CELESTIALBODY.CelBodyID
 GO
 
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
@@ -91,19 +90,29 @@ Begin DesignProperties =
    End
    Begin DiagramPane = 
       Begin Origin = 
-         Top = 0
+         Top = -134
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "DBUSER"
+         Begin Table = "HABITABILITY"
             Begin Extent = 
-               Top = 6
-               Left = 38
-               Bottom = 136
-               Right = 208
+               Top = 261
+               Left = 436
+               Bottom = 374
+               Right = 606
             End
             DisplayFlags = 280
             TopColumn = 0
+         End
+         Begin Table = "CELESTIALBODY"
+            Begin Extent = 
+               Top = 106
+               Left = 555
+               Bottom = 236
+               Right = 725
+            End
+            DisplayFlags = 280
+            TopColumn = 3
          End
          Begin Table = "SAVED"
             Begin Extent = 
@@ -115,65 +124,55 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "CELESTIALBODY"
-            Begin Extent = 
-               Top = 6
-               Left = 454
-               Bottom = 136
-               Right = 624
-            End
-            DisplayFlags = 280
-            TopColumn = 3
-         End
          Begin Table = "ORBITALSYSTEM"
             Begin Extent = 
-               Top = 6
-               Left = 662
-               Bottom = 119
-               Right = 832
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "FACTIONCONTROLS"
-            Begin Extent = 
-               Top = 215
-               Left = 260
-               Bottom = 311
-               Right = 430
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "FACTION"
-            Begin Extent = 
-               Top = 120
-               Left = 662
-               Bottom = 216
-               Right = 832
+               Top = 139
+               Left = 790
+               Bottom = 252
+               Right = 960
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "CelBodTYPE"
             Begin Extent = 
-               Top = 138
-               Left = 38
-               Bottom = 251
-               Right = 228
+               Top = 226
+               Left = 43
+               Bottom = 339
+               Right = 233
             End
-            Di' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'UserSavedView'
-GO
-
-EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane2', @value=N'splayFlags = 280
+            DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "HABITABILITY"
+         Begin Table = "FACTIONCONTROLS"
             Begin Extent = 
-               Top = 225
-               Left = 473
-               Bottom = 338
-               Right = 643
+               Top = 135
+               Left = 260
+               Bottom = 231
+               Right = 430
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "DBUSER"
+            Begin Extent = 
+               Top = 6
+               Left = 38
+               Bottom = 136
+               Right = 208
+            End
+  ' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'UserSavedView'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane2', @value=N'          DisplayFlags = 280
+            TopColumn = 2
+         End
+         Begin Table = "FACTION"
+            Begin Extent = 
+               Top = 135
+               Left = 38
+               Bottom = 231
+               Right = 208
             End
             DisplayFlags = 280
             TopColumn = 0

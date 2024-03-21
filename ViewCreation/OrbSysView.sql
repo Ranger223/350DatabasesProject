@@ -1,7 +1,7 @@
 USE [CBIS]
 GO
 
-/****** Object:  View [dbo].[OrbSysView]    Script Date: 3/5/2024 1:39:46 PM ******/
+/****** Object:  View [dbo].[OrbSysView]    Script Date: 3/21/2024 2:30:46 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -10,7 +10,7 @@ GO
 
 CREATE VIEW [dbo].[OrbSysView]
 AS
-SELECT        dbo.ORBITALSYSTEM.OrbSysName, dbo.CELESTIALBODY.CelBodyName, dbo.CELESTIALBODY.Mass, dbo.CELESTIALBODY.Radius, dbo.CELESTIALBODY.OrbitalDistance, dbo.CelBodTYPE.CelBodyTypeName, 
+SELECT        dbo.CELESTIALBODY.CelBodyName, dbo.ORBITALSYSTEM.OrbSysName, dbo.CELESTIALBODY.Mass, dbo.CELESTIALBODY.Radius, dbo.CELESTIALBODY.OrbitalDistance, dbo.CelBodTYPE.CelBodyTypeName, 
                          dbo.HABITABILITY.HabName, dbo.HABITABILITY.Colonizable, dbo.FACTION.FactionName
 FROM            dbo.HABITABILITY INNER JOIN
                          dbo.CelBodTYPE INNER JOIN
@@ -18,8 +18,7 @@ FROM            dbo.HABITABILITY INNER JOIN
                          dbo.FACTION INNER JOIN
                          dbo.FACTIONCONTROLS ON dbo.FACTION.FacID = dbo.FACTIONCONTROLS.FacID AND dbo.FACTION.FacID = dbo.FACTIONCONTROLS.FacID ON dbo.CELESTIALBODY.CelBodyID = dbo.FACTIONCONTROLS.CBID AND 
                          dbo.CELESTIALBODY.CelBodyID = dbo.FACTIONCONTROLS.CBID LEFT OUTER JOIN
-                         dbo.ORBITALSYSTEM ON dbo.CELESTIALBODY.CelBodyID = dbo.ORBITALSYSTEM.CelBodyID AND dbo.CELESTIALBODY.CelBodyID = dbo.ORBITALSYSTEM.CelBodyID AND 
-                         dbo.CELESTIALBODY.OSystemID = dbo.ORBITALSYSTEM.OrbSysID
+                         dbo.ORBITALSYSTEM ON dbo.CELESTIALBODY.OSystemID = dbo.ORBITALSYSTEM.OrbSysID
 GO
 
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
@@ -93,42 +92,12 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "ORBITALSYSTEM"
+         Begin Table = "HABITABILITY"
             Begin Extent = 
-               Top = 6
-               Left = 38
-               Bottom = 119
-               Right = 208
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "CELESTIALBODY"
-            Begin Extent = 
-               Top = 6
-               Left = 246
-               Bottom = 136
-               Right = 416
-            End
-            DisplayFlags = 280
-            TopColumn = 3
-         End
-         Begin Table = "FACTIONCONTROLS"
-            Begin Extent = 
-               Top = 6
-               Left = 454
-               Bottom = 102
-               Right = 624
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "FACTION"
-            Begin Extent = 
-               Top = 6
-               Left = 662
-               Bottom = 102
-               Right = 832
+               Top = 102
+               Left = 682
+               Bottom = 215
+               Right = 852
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -143,12 +112,42 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "HABITABILITY"
+         Begin Table = "CELESTIALBODY"
             Begin Extent = 
-               Top = 102
-               Left = 682
-               Bottom = 215
-               Right = 852
+               Top = 161
+               Left = 247
+               Bottom = 291
+               Right = 417
+            End
+            DisplayFlags = 280
+            TopColumn = 3
+         End
+         Begin Table = "FACTION"
+            Begin Extent = 
+               Top = 6
+               Left = 662
+               Bottom = 102
+               Right = 832
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "FACTIONCONTROLS"
+            Begin Extent = 
+               Top = 6
+               Left = 454
+               Bottom = 102
+               Right = 624
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "ORBITALSYSTEM"
+            Begin Extent = 
+               Top = 82
+               Left = 0
+               Bottom = 195
+               Right = 170
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -163,10 +162,10 @@ Begin DesignProperties =
    End
    Begin CriteriaPane = 
       Begin ColumnWidths = 11
-         Colu' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'OrbSysView'
+         Co' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'OrbSysView'
 GO
 
-EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane2', @value=N'mn = 1440
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane2', @value=N'lumn = 1440
          Alias = 900
          Table = 1170
          Output = 720
