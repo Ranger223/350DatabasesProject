@@ -1,7 +1,7 @@
 USE [CBIS]
 GO
 
-/****** Object:  View [dbo].[CelBodyView]    Script Date: 3/5/2024 1:40:42 PM ******/
+/****** Object:  View [dbo].[CelBodyView]    Script Date: 3/28/2024 11:01:14 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -15,8 +15,7 @@ SELECT        dbo.CELESTIALBODY.CelBodyName, dbo.CELESTIALBODY.Mass, dbo.CELESTI
 FROM            dbo.CelBodTYPE INNER JOIN
                          dbo.HABITABILITY ON dbo.CelBodTYPE.HabID = dbo.HABITABILITY.HabID RIGHT OUTER JOIN
                          dbo.CELESTIALBODY ON dbo.CelBodTYPE.CelBodyTypeID = dbo.CELESTIALBODY.CelBodyTypeID LEFT OUTER JOIN
-                         dbo.ORBITALSYSTEM ON dbo.CELESTIALBODY.OSystemID = dbo.ORBITALSYSTEM.OrbSysID AND dbo.CELESTIALBODY.CelBodyID = dbo.ORBITALSYSTEM.CelBodyID AND 
-                         dbo.CELESTIALBODY.CelBodyID = dbo.ORBITALSYSTEM.CelBodyID LEFT OUTER JOIN
+                         dbo.ORBITALSYSTEM ON dbo.CELESTIALBODY.OSystemID = dbo.ORBITALSYSTEM.OrbSysID LEFT OUTER JOIN
                          dbo.FACTION INNER JOIN
                          dbo.FACTIONCONTROLS ON dbo.FACTION.FacID = dbo.FACTIONCONTROLS.FacID AND dbo.FACTION.FacID = dbo.FACTIONCONTROLS.FacID ON dbo.CELESTIALBODY.CelBodyID = dbo.FACTIONCONTROLS.CBID AND 
                          dbo.CELESTIALBODY.CelBodyID = dbo.FACTIONCONTROLS.CBID
@@ -93,16 +92,6 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "HABITABILITY"
-            Begin Extent = 
-               Top = 190
-               Left = 469
-               Bottom = 303
-               Right = 639
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
          Begin Table = "CelBodTYPE"
             Begin Extent = 
                Top = 166
@@ -113,12 +102,32 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
+         Begin Table = "HABITABILITY"
+            Begin Extent = 
+               Top = 190
+               Left = 469
+               Bottom = 303
+               Right = 639
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "CELESTIALBODY"
+            Begin Extent = 
+               Top = 6
+               Left = 38
+               Bottom = 136
+               Right = 208
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
          Begin Table = "ORBITALSYSTEM"
             Begin Extent = 
-               Top = 161
-               Left = 11
-               Bottom = 274
-               Right = 181
+               Top = 259
+               Left = 13
+               Bottom = 372
+               Right = 183
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -139,16 +148,6 @@ Begin DesignProperties =
                Left = 246
                Bottom = 102
                Right = 416
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "CELESTIALBODY"
-            Begin Extent = 
-               Top = 6
-               Left = 38
-               Bottom = 136
-               Right = 208
             End
             DisplayFlags = 280
             TopColumn = 0

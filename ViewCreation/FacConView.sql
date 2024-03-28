@@ -1,7 +1,7 @@
 USE [CBIS]
 GO
 
-/****** Object:  View [dbo].[FacConView]    Script Date: 3/21/2024 2:25:54 PM ******/
+/****** Object:  View [dbo].[FacConView]    Script Date: 3/28/2024 11:01:35 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -18,8 +18,7 @@ FROM            dbo.CelBodTYPE INNER JOIN
                          dbo.FACTION INNER JOIN
                          dbo.FACTIONCONTROLS ON dbo.FACTION.FacID = dbo.FACTIONCONTROLS.FacID AND dbo.FACTION.FacID = dbo.FACTIONCONTROLS.FacID ON dbo.CELESTIALBODY.CelBodyID = dbo.FACTIONCONTROLS.CBID AND 
                          dbo.CELESTIALBODY.CelBodyID = dbo.FACTIONCONTROLS.CBID LEFT OUTER JOIN
-                         dbo.ORBITALSYSTEM ON dbo.CELESTIALBODY.OSystemID = dbo.ORBITALSYSTEM.OrbSysID AND dbo.CELESTIALBODY.CelBodyID = dbo.ORBITALSYSTEM.CelBodyID AND 
-                         dbo.CELESTIALBODY.CelBodyID = dbo.ORBITALSYSTEM.CelBodyID
+                         dbo.ORBITALSYSTEM ON dbo.CELESTIALBODY.OSystemID = dbo.ORBITALSYSTEM.OrbSysID
 GO
 
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
@@ -123,16 +122,6 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "ORBITALSYSTEM"
-            Begin Extent = 
-               Top = 214
-               Left = 194
-               Bottom = 327
-               Right = 364
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
          Begin Table = "FACTION"
             Begin Extent = 
                Top = 6
@@ -153,6 +142,16 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
+         Begin Table = "ORBITALSYSTEM"
+            Begin Extent = 
+               Top = 219
+               Left = 8
+               Bottom = 332
+               Right = 178
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
       End
    End
    Begin SQLPane = 
@@ -160,13 +159,24 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
+      Begin ColumnWidths = 9
+         Width = 284
+         Width = 1500
+     ' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'FacConView'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane2', @value=N'    Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+      End
    End
    Begin CriteriaPane = 
       Begin ColumnWidths = 11
-         Colu' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'FacConView'
-GO
-
-EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane2', @value=N'mn = 1440
+         Column = 1440
          Alias = 900
          Table = 1170
          Output = 720

@@ -1,12 +1,13 @@
 USE [CBIS]
 GO
 
-/****** Object:  View [dbo].[UserSavedView]    Script Date: 3/21/2024 2:35:42 PM ******/
+/****** Object:  View [dbo].[UserSavedView]    Script Date: 3/28/2024 11:01:58 AM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 CREATE VIEW [dbo].[UserSavedView]
 AS
