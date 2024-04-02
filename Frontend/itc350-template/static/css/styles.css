@@ -21,3 +21,7 @@
     border: 1px solid rgb(77, 103, 190);
     background-color: #d0e1f5;
 }
+
+th, td {
+    padding: 15px;
+}

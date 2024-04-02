@@ -35,6 +35,16 @@ def get_all_items():
     result = cursor.fetchall() # Gets result from query
     conn.close() # Close the db connection (NOTE: You should do this after each query, otherwise your database may become locked)
     return result
+
+def get_orbsys_view():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    query = "SELECT CelBodyName as 'Primary Body', BodyCount, OrbSysName FROM OrbMemCount ORDER BY OrbSysName"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    conn.close()
+    return result
 # ------------------------ END FUNCTIONS ------------------------ #
 
 
@@ -42,8 +52,10 @@ def get_all_items():
 # EXAMPLE OF GET REQUEST
 @app.route("/", methods=["GET"])
 def home():
-    items = get_all_items() # Call defined function to get all items
-    return render_template("index.html", items=items) # Return the page to be rendered
+
+
+    items = get_orbsys_view() # Call defined function to get all items
+    return render_template("orbsysview.html", items=items) # Return the page to be rendered
 
 
 # EXAMPLE OF POST REQUEST
