@@ -45,6 +45,16 @@ def get_orbsys_view():
     result = cursor.fetchall()
     conn.close()
     return result
+
+def get_system_view(systemname):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    query = "SELECT CelBodyName, Mass, Radius, CelBodyTypeName, HabName, Colonizable, FactionName FROM OrbSysView WHERE OrbSysName='%s'"
+    cursor.execute(query,(systemname))
+    result = cursor.fetchall()
+    conn.close()
+    return result
 # ------------------------ END FUNCTIONS ------------------------ #
 
 
@@ -57,6 +67,10 @@ def home():
     items = get_orbsys_view() # Call defined function to get all items
     return render_template("orbsysview.html", items=items) # Return the page to be rendered
 
+@app.route("/<systemname>/view", methods=["GET"])
+def systemview(systemname):
+    items = get_system_view(systemname)
+    return render_template("systemview.html", items=items)
 
 # EXAMPLE OF POST REQUEST
 @app.route("/new-item", methods=["POST"])
