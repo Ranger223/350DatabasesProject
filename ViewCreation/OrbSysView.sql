@@ -1,18 +1,17 @@
 USE [CBIS]
 GO
 
-/****** Object:  View [dbo].[OrbSysView]    Script Date: 3/28/2024 11:01:45 AM ******/
+/****** Object:  View [dbo].[OrbSysView]    Script Date: 4/4/2024 1:33:45 PM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-
 CREATE VIEW [dbo].[OrbSysView]
 AS
 SELECT        dbo.CELESTIALBODY.CelBodyName, dbo.ORBITALSYSTEM.OrbSysName, dbo.CELESTIALBODY.Mass, dbo.CELESTIALBODY.Radius, dbo.CELESTIALBODY.OrbitalDistance, dbo.CelBodTYPE.CelBodyTypeName, 
-                         dbo.HABITABILITY.HabName, dbo.HABITABILITY.Colonizable, dbo.FACTION.FactionName
+                         dbo.HABITABILITY.HabName, dbo.HABITABILITY.Colonizable, dbo.FACTION.FactionName, dbo.ORBITALSYSTEM.CelBodyID, dbo.ORBITALSYSTEM.OrbSysID
 FROM            dbo.HABITABILITY INNER JOIN
                          dbo.CelBodTYPE INNER JOIN
                          dbo.CELESTIALBODY ON dbo.CelBodTYPE.CelBodyTypeID = dbo.CELESTIALBODY.CelBodyTypeID ON dbo.HABITABILITY.HabID = dbo.CelBodTYPE.HabID LEFT OUTER JOIN
@@ -20,6 +19,7 @@ FROM            dbo.HABITABILITY INNER JOIN
                          dbo.FACTIONCONTROLS ON dbo.FACTION.FacID = dbo.FACTIONCONTROLS.FacID AND dbo.FACTION.FacID = dbo.FACTIONCONTROLS.FacID ON dbo.CELESTIALBODY.CelBodyID = dbo.FACTIONCONTROLS.CBID AND 
                          dbo.CELESTIALBODY.CelBodyID = dbo.FACTIONCONTROLS.CBID LEFT OUTER JOIN
                          dbo.ORBITALSYSTEM ON dbo.CELESTIALBODY.OSystemID = dbo.ORBITALSYSTEM.OrbSysID
+WHERE        (dbo.CELESTIALBODY.CelBodyID <> 0)
 GO
 
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
@@ -121,7 +121,7 @@ Begin DesignProperties =
                Right = 417
             End
             DisplayFlags = 280
-            TopColumn = 3
+            TopColumn = 0
          End
          Begin Table = "FACTION"
             Begin Extent = 

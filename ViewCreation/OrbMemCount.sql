@@ -1,7 +1,7 @@
 USE [CBIS]
 GO
 
-/****** Object:  View [dbo].[OrbMemCount]    Script Date: 4/2/2024 1:15:44 PM ******/
+/****** Object:  View [dbo].[OrbMemCount]    Script Date: 4/4/2024 1:33:54 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -10,8 +10,9 @@ GO
 
 CREATE VIEW [dbo].[OrbMemCount]
 AS
-SELECT        dbo.CELESTIALBODY.OSystemID, CAST(COUNT(dbo.CELESTIALBODY.CelBodyID) AS INT) + CAST(CASE WHEN CELESTIALBODY_1.OSystemID = dbo.CELESTIALBODY.OSystemID THEN 0 ELSE 1 END AS INT) AS BodyCount, 
-                         dbo.ORBITALSYSTEM.CelBodyID, dbo.ORBITALSYSTEM.OrbSysName, CELESTIALBODY_1.CelBodyName
+SELECT        dbo.CELESTIALBODY.OSystemID, CAST(COUNT(dbo.CELESTIALBODY.CelBodyID) AS INT) + CAST(CASE WHEN CELESTIALBODY_1.OSystemID = dbo.CELESTIALBODY.OSystemID THEN 0 ELSE 1 END AS INT) 
+                         - CAST(CASE WHEN dbo.CELESTIALBODY.OSystemID = 0 THEN 1 ELSE 0 END AS INT) AS BodyCount, dbo.ORBITALSYSTEM.CelBodyID, 
+                         (CASE WHEN CELESTIALBODY_1.OSystemID = 0 THEN 'Independent' ELSE dbo.ORBITALSYSTEM.OrbSysName END) AS OrbSysName, CELESTIALBODY_1.CelBodyName
 FROM            dbo.CELESTIALBODY INNER JOIN
                          dbo.ORBITALSYSTEM ON dbo.CELESTIALBODY.OSystemID = dbo.ORBITALSYSTEM.OrbSysID INNER JOIN
                          dbo.CELESTIALBODY AS CELESTIALBODY_1 ON dbo.ORBITALSYSTEM.CelBodyID = CELESTIALBODY_1.CelBodyID
