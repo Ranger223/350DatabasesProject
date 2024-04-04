@@ -36,6 +36,7 @@ def get_all_items():
     conn.close() # Close the db connection (NOTE: You should do this after each query, otherwise your database may become locked)
     return result
 
+#get all orbital systems
 def get_orbsys_view():
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -46,6 +47,7 @@ def get_orbsys_view():
     conn.close()
     return result
 
+#Get members of a system based on systemID
 def get_system_view(systemid):
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -62,13 +64,28 @@ def get_system_view(systemid):
 
 # ------------------------ BEGIN ROUTES ------------------------ #
 # EXAMPLE OF GET REQUEST
+
+#show all planets
 @app.route("/", methods=["GET"])
 def home():
+    #I reccommend making a function like the ones above to get all planets
+    return render_template("home.html")
 
+@app.route("/<userid>/saved")
+def usersaved(userid):
+    return render_template("userplanets.html")
 
+@app.route("/<facid>/view")
+def factionplanet(facid):
+    return render_template("factionplanets.html")
+
+#displays All orbital systems
+@app.route("/orbsys", methods=["GET"])
+def obsys():
     items = get_orbsys_view() # Call defined function to get all items
     return render_template("orbsysview.html", items=items) # Return the page to be rendered
 
+#displays Members of an Orbital system
 @app.route("/<systemid>/view", methods=["GET"])
 def systemview(systemid):
     items = get_system_view(systemid)
