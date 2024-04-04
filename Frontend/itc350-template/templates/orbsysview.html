@@ -19,6 +19,7 @@
     <div class="navLeft">
         <a href="/">Home</a>
         <a href="#saved">Saved</a>
+        <a href="/orbsys">All Orbital Systems</a>
     </div>
     <div class="navRight">
         <input type="text" placeholder="Search...">
@@ -39,7 +40,7 @@
             <!-- This is some python jinja2 code. Only existing items will be displayed. -->
             {% for item in items %}
             <tr>
-                <td> <a href=" {{'/%s/view'%item[3]}} "> {{item[2]}} </a> </td>
+                <td> <a href=" {{'/%s/systemview'%item[3]}} "> {{item[2]}} </a> </td>
                 <td> {{item[0]}} </td>
                 <td> {{item[1]}} </td>
             </tr>

@@ -71,12 +71,16 @@ def home():
     #I reccommend making a function like the ones above to get all planets
     return render_template("home.html")
 
+#shows a user's saved planets
 @app.route("/<userid>/saved")
 def usersaved(userid):
+
     return render_template("userplanets.html")
 
-@app.route("/<facid>/view")
+#shows a faction's planets
+@app.route("/<facid>/faction")
 def factionplanet(facid):
+
     return render_template("factionplanets.html")
 
 #displays All orbital systems
@@ -86,7 +90,7 @@ def obsys():
     return render_template("orbsysview.html", items=items) # Return the page to be rendered
 
 #displays Members of an Orbital system
-@app.route("/<systemid>/view", methods=["GET"])
+@app.route("/<systemid>/systemview", methods=["GET"])
 def systemview(systemid):
     items = get_system_view(systemid)
     return render_template("systemview.html", items=items)
