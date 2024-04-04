@@ -112,7 +112,7 @@ table {
     margin: 0;
     border:none;
     border-collapse: separate;
-    border-spacing: 0;
+    border-spacing: 0 0.25em;
     margin-left: 2.5%;
     margin-right: 2.5%;
 }
@@ -193,6 +193,7 @@ table td:first-child, table th:first-child {
 }
 
 .bg-animation {
+    z-index: -1;
     position: fixed;
     top: 0;
     left: 0;
