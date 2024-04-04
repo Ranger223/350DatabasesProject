@@ -40,19 +40,21 @@ def get_orbsys_view():
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    query = "SELECT CelBodyName as 'Primary Body', BodyCount, OrbSysName FROM OrbMemCount ORDER BY OrbSysName"
+    query = "SELECT CelBodyName as 'Primary Body', BodyCount, OrbSysName, OSystemID FROM OrbMemCount ORDER BY OrbSysName"
     cursor.execute(query)
     result = cursor.fetchall()
     conn.close()
     return result
 
-def get_system_view(systemname):
+def get_system_view(systemid):
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    query = "SELECT CelBodyName, Mass, Radius, CelBodyTypeName, HabName, Colonizable, FactionName FROM OrbSysView WHERE OrbSysName='%s'"
-    cursor.execute(query,(systemname))
+    query = "SELECT CelBodyName, Mass, Radius, CelBodyTypeName, HabName, Colonizable, FactionName, OrbSysName FROM OrbSysView WHERE OrbSysID=%s" 
+    cursor.execute(query,(systemid))
     result = cursor.fetchall()
+    print(systemid)
+    print(result)
     conn.close()
     return result
 # ------------------------ END FUNCTIONS ------------------------ #
@@ -67,9 +69,9 @@ def home():
     items = get_orbsys_view() # Call defined function to get all items
     return render_template("orbsysview.html", items=items) # Return the page to be rendered
 
-@app.route("/<systemname>/view", methods=["GET"])
-def systemview(systemname):
-    items = get_system_view(systemname)
+@app.route("/<systemid>/view", methods=["GET"])
+def systemview(systemid):
+    items = get_system_view(systemid)
     return render_template("systemview.html", items=items)
 
 # EXAMPLE OF POST REQUEST
