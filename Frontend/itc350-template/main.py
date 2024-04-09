@@ -53,15 +53,16 @@ def get_search_results(search):
 def get_all_planets():
     conn = get_db_connection()
     cursor = conn.cursor()
-    query = ""
+    query = "SELECT * FROM CelBodyVeiw"
     result = cursor.fetchall()
     conn.close()
     return result
 
-def get_faction_planets(facion):
+def get_faction_planets(faction):
     conn = get_db_connection()
     cursor = conn.cursor()
-    query = ""
+    query = "SELECT * FROM FacConVeiw WHERE FactionName = %s"
+    cursor.execute(query,(faction))
     result = cursor.fetchall()
     conn.close()
     return result
@@ -132,4 +133,4 @@ def search():
 
 # listen on port 8080
 if __name__ == "__main__":
-    app.run(port=8080, debug=True) # TODO: Students PLEASE remove debug=True when you deploy this for production!!!!!
+    app.run(host='0.0.0.0', port=8080, debug=True) # TODO: Students PLEASE remove debug=True when you deploy this for production!!!!!
