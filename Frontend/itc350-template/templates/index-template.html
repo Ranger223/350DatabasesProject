@@ -7,6 +7,29 @@
     <link rel="stylesheet" href="static/css/styles.css">
 </head>
 <body>
+    <div class="bg-animation">
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+        <div id="stars4"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="navLeft">
+            <a href="/">Home</a>
+            <div class="divider"></div>
+            <a href="#saved">Saved</a>
+            <div class="divider"></div>
+            <a href="/orbsys">All Orbital Systems</a>
+        </div>
+        <div class="navRight">
+            <input type="text" placeholder="Search...">
+            <a href="#Account">Account</a>
+            <div class="divider"></div>
+            <a href="#logout">Log Out</a>
+        </div>
+    </nav>
+    
     <!-- Show error or success messages if there are any -->
     {% with messages = get_flashed_messages(with_categories=true) %}
         <!-- Check to see if there are any messages to show -->
