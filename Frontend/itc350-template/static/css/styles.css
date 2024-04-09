@@ -9,11 +9,11 @@ body {
 .navbar input[type=text] {
     padding: 1em;
     border: none;
-    margin-right: 1em;
+    margin-right: 0;
     font-size: 18px;
     width: 15em;
     background: linear-gradient(to bottom, #181820, #1d1d2f);
-    }
+}
 
 .navbar {
     position: sticky;
@@ -35,6 +35,15 @@ body {
     border: 0;
     height: 100%;
     Width: 100%;
+}
+
+.divider {
+    border-left: 1px solid rgba(26, 26, 38, 1); 
+    height:80%;
+    margin:auto;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
 }
 
 .navbar a {
