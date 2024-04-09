@@ -3,7 +3,6 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 import pymssql
 from dotenv import load_dotenv
 
-
 # Load environment variables from .env file
 load_dotenv()
 
@@ -22,19 +21,6 @@ def get_db_connection():
         database=os.getenv("DB_DATABASE"),
     )
     return conn
-
-# Get all items from the "items" table of the db
-def get_all_items():
-    # Create a new database connection for each request
-    conn = get_db_connection()  # Create a new database connection
-    cursor = conn.cursor() # Creates a cursor for the connection, you need this to do queries
-    # Query the db
-    query = "SELECT Username FROM DBUSER"
-    cursor.execute(query)
-    # Get result and close
-    result = cursor.fetchall() # Gets result from query
-    conn.close() # Close the db connection (NOTE: You should do this after each query, otherwise your database may become locked)
-    return result
 
 #get all orbital systems
 def get_orbsys_view():
@@ -59,6 +45,27 @@ def get_system_view(systemid):
     print(result)
     conn.close()
     return result
+
+def get_search_results(search):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+def get_all_planets():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    query = ""
+    result = cursor.fetchall()
+    conn.close()
+    return result
+
+def get_faction_planets(facion):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    query = ""
+    result = cursor.fetchall()
+    conn.close()
+    return result
+
 # ------------------------ END FUNCTIONS ------------------------ #
 
 
@@ -72,15 +79,15 @@ def home():
     return render_template("home.html")
 
 #shows a user's saved planets
-@app.route("/<userid>/saved")
+@app.route("/<userid>/saved", methods=["GET"])
 def usersaved(userid):
 
     return render_template("userplanets.html")
 
 #shows a faction's planets
-@app.route("/<facid>/faction")
+@app.route("/<facid>/faction") # //4/faciont
 def factionplanet(facid):
-
+    get_faction_planets(facid)
     return render_template("factionplanets.html")
 
 #displays All orbital systems
@@ -115,6 +122,11 @@ def add_item():
     except Exception as e:
         flash(f"An error occurred: {str(e)}", "error") # Send the error message to the web page
         return redirect(url_for("home")) # Redirect to home
+    
+@app.route("/search", methods=["Post"])
+def search():
+    data = request.form
+    return
 # ------------------------ END ROUTES ------------------------ #
 
 
