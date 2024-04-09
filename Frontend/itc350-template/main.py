@@ -86,7 +86,7 @@ def usersaved(userid):
     return render_template("userplanets.html")
 
 #shows a faction's planets
-@app.route("/<facid>/faction") # //4/faciont
+@app.route("/faction/<facid>") # //4/faciont
 def factionplanet(facid):
     get_faction_planets(facid)
     return render_template("factionplanets.html")
@@ -98,7 +98,7 @@ def obsys():
     return render_template("orbsysview.html", items=items) # Return the page to be rendered
 
 #displays Members of an Orbital system
-@app.route("/<systemid>/systemview", methods=["GET"])
+@app.route("/systemview/<systemid>", methods=["GET"])
 def systemview(systemid):
     items = get_system_view(systemid)
     return render_template("systemview.html", items=items)
