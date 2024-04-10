@@ -1,13 +1,12 @@
 USE [CBIS]
 GO
 
-/****** Object:  View [dbo].[UserSavedView]    Script Date: 3/28/2024 11:01:58 AM ******/
+/****** Object:  View [dbo].[UserSavedView]    Script Date: 4/4/2024 1:33:35 PM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
-
 
 CREATE VIEW [dbo].[UserSavedView]
 AS
@@ -22,6 +21,7 @@ FROM            dbo.FACTION INNER JOIN
                          dbo.CelBodTYPE ON dbo.CELESTIALBODY.CelBodyTypeID = dbo.CelBodTYPE.CelBodyTypeID ON dbo.HABITABILITY.HabID = dbo.CelBodTYPE.HabID INNER JOIN
                          dbo.DBUSER ON dbo.SAVED.UID = dbo.DBUSER.UID AND dbo.SAVED.UID = dbo.DBUSER.UID ON dbo.FACTIONCONTROLS.CBID = dbo.CELESTIALBODY.CelBodyID AND 
                          dbo.FACTIONCONTROLS.CBID = dbo.CELESTIALBODY.CelBodyID
+WHERE        (dbo.CELESTIALBODY.CelBodyID <> 0)
 GO
 
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
@@ -95,6 +95,26 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
+         Begin Table = "FACTION"
+            Begin Extent = 
+               Top = 135
+               Left = 38
+               Bottom = 231
+               Right = 208
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "FACTIONCONTROLS"
+            Begin Extent = 
+               Top = 135
+               Left = 260
+               Bottom = 231
+               Right = 430
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
          Begin Table = "HABITABILITY"
             Begin Extent = 
                Top = 261
@@ -141,17 +161,10 @@ Begin DesignProperties =
                Left = 43
                Bottom = 339
                Right = 233
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "FACTIONCONTROLS"
-            Begin Extent = 
-               Top = 135
-               Left = 260
-               Bottom = 231
-               Right = 430
-            End
+            End' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'UserSavedView'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane2', @value=N'
             DisplayFlags = 280
             TopColumn = 0
          End
@@ -162,21 +175,8 @@ Begin DesignProperties =
                Bottom = 136
                Right = 208
             End
-  ' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'UserSavedView'
-GO
-
-EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane2', @value=N'          DisplayFlags = 280
-            TopColumn = 2
-         End
-         Begin Table = "FACTION"
-            Begin Extent = 
-               Top = 135
-               Left = 38
-               Bottom = 231
-               Right = 208
-            End
             DisplayFlags = 280
-            TopColumn = 0
+            TopColumn = 2
          End
       End
    End

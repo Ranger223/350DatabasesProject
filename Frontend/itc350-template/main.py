@@ -3,7 +3,6 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 import pymssql
 from dotenv import load_dotenv
 
-
 # Load environment variables from .env file
 load_dotenv()
 
@@ -23,17 +22,15 @@ def get_db_connection():
     )
     return conn
 
-# Get all items from the "items" table of the db
-def get_all_items():
-    # Create a new database connection for each request
-    conn = get_db_connection()  # Create a new database connection
-    cursor = conn.cursor() # Creates a cursor for the connection, you need this to do queries
-    # Query the db
-    query = "SELECT Username FROM DBUSER"
+#get all orbital systems
+def get_orbsys_view():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    query = "SELECT CelBodyName as 'Primary Body', BodyCount, OrbSysName, OSystemID FROM OrbMemCount ORDER BY OrbSysName"
     cursor.execute(query)
-    # Get result and close
-    result = cursor.fetchall() # Gets result from query
-    conn.close() # Close the db connection (NOTE: You should do this after each query, otherwise your database may become locked)
+    result = cursor.fetchall()
+    conn.close()
     return result
 
 def get_curr_user():
@@ -48,21 +45,80 @@ def get_curr_user():
     result = cursor.fetchall() # Gets result from query
     conn.close() # Close the db connection (NOTE: You should do this after each query, otherwise your database may become locked)
     return result
+#Get members of a system based on systemID
+def get_system_view(systemid):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    query = "SELECT CelBodyName, Mass, Radius, CelBodyTypeName, HabName, Colonizable, FactionName, OrbSysName FROM OrbSysView WHERE OrbSysID=%s" 
+    cursor.execute(query,(systemid))
+    result = cursor.fetchall()
+    print(systemid)
+    print(result)
+    conn.close()
+    return result
+
+def get_search_results(search):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+def get_all_planets():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    query = "SELECT * FROM CelBodyVeiw"
+    result = cursor.fetchall()
+    conn.close()
+    return result
+
+def get_faction_planets(faction):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    query = "SELECT * FROM FacConVeiw WHERE FactionName = %s"
+    cursor.execute(query,(faction))
+    result = cursor.fetchall()
+    conn.close()
+    return result
+
 # ------------------------ END FUNCTIONS ------------------------ #
 
 
 # ------------------------ BEGIN ROUTES ------------------------ #
 # EXAMPLE OF GET REQUEST
+
+#show all planets
 @app.route("/", methods=["GET"])
 def home():
-    items = get_all_items() # Call defined function to get all items
-    return render_template("index.html", items=items) # Return the page to be rendered
+    #I reccommend making a function like the ones above to get all planets
+    return render_template("home.html")
 
 @app.route("/user", methods=["GET"])
 def userprofile():
     user = get_curr_user() # Call defined function to get all items
     return render_template("user.html", user=user[0]) # Return the page to be rendered
 
+#shows a user's saved planets
+@app.route("/<userid>/saved", methods=["GET"])
+def usersaved(userid):
+
+    return render_template("userplanets.html")
+
+#shows a faction's planets
+@app.route("/faction/<facid>") # //4/faciont
+def factionplanet(facid):
+    get_faction_planets(facid)
+    return render_template("factionplanets.html")
+
+#displays All orbital systems
+@app.route("/orbsys", methods=["GET"])
+def obsys():
+    items = get_orbsys_view() # Call defined function to get all items
+    return render_template("orbsysview.html", items=items) # Return the page to be rendered
+
+#displays Members of an Orbital system
+@app.route("/systemview/<systemid>", methods=["GET"])
+def systemview(systemid):
+    items = get_system_view(systemid)
+    return render_template("systemview.html", items=items)
 
 # EXAMPLE OF POST REQUEST
 @app.route("/new-item", methods=["POST"])
@@ -84,9 +140,14 @@ def add_item():
     except Exception as e:
         flash(f"An error occurred: {str(e)}", "error") # Send the error message to the web page
         return redirect(url_for("home")) # Redirect to home
+    
+@app.route("/search", methods=["Post"])
+def search():
+    data = request.form
+    return
 # ------------------------ END ROUTES ------------------------ #
 
 
 # listen on port 8080
 if __name__ == "__main__":
-    app.run(port=8080, debug=True) # TODO: Students PLEASE remove debug=True when you deploy this for production!!!!!
+    app.run(host='0.0.0.0', port=8080, debug=True) # TODO: Students PLEASE remove debug=True when you deploy this for production!!!!!

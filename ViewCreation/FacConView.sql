@@ -1,7 +1,7 @@
 USE [CBIS]
 GO
 
-/****** Object:  View [dbo].[FacConView]    Script Date: 3/28/2024 11:01:35 AM ******/
+/****** Object:  View [dbo].[FacConView]    Script Date: 4/4/2024 1:34:04 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -19,6 +19,7 @@ FROM            dbo.CelBodTYPE INNER JOIN
                          dbo.FACTIONCONTROLS ON dbo.FACTION.FacID = dbo.FACTIONCONTROLS.FacID AND dbo.FACTION.FacID = dbo.FACTIONCONTROLS.FacID ON dbo.CELESTIALBODY.CelBodyID = dbo.FACTIONCONTROLS.CBID AND 
                          dbo.CELESTIALBODY.CelBodyID = dbo.FACTIONCONTROLS.CBID LEFT OUTER JOIN
                          dbo.ORBITALSYSTEM ON dbo.CELESTIALBODY.OSystemID = dbo.ORBITALSYSTEM.OrbSysID
+WHERE        (dbo.CELESTIALBODY.CelBodyID <> 0)
 GO
 
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]

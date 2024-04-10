@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Interstellar Database </title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+
+<body>
+    {% include 'background.html' %}
+    {% include 'navBar.html' %}
+
+    <div class="body">
+            <h2> {{items[0][7]}} System </h2>
+            <table>
+                <tr>
+                    <th>Planet</th>
+                    <th>Mass</th>
+                    <th>Radius</th>
+                    <th>Type</th>
+                    <th>Habitability</th>   
+                    <th>Colonizable</th>
+                    <th>Faction</th>
+                </tr>
+                <!-- This is some python jinja2 code. Only existing items will be displayed. -->
+                {% for item in items %}
+                <tr>
+                    <td> {{item[0]}} </td>
+                    <td> {{item[1]}} </td>
+                    <td> {{item[2]}} </td>
+                    <td> {{item[3]}} </td>
+                    <td> {{item[4]}} </td>
+                    <td> {{item[5]}} </td>
+                    <td> {{item[6]}} </td>
+                </tr>
+                {% endfor %}
+            </table>
+    </div>
+</body>
