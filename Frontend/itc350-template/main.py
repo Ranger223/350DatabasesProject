@@ -35,6 +35,19 @@ def get_all_items():
     result = cursor.fetchall() # Gets result from query
     conn.close() # Close the db connection (NOTE: You should do this after each query, otherwise your database may become locked)
     return result
+
+def get_curr_user():
+    # Create a new database connection for each request
+    conn = get_db_connection()  # Create a new database connection
+    cursor = conn.cursor() # Creates a cursor for the connection, you need this to do queries
+    # Query the db
+    #query = ("SELECT * FROM DBUSER WHERE Username=?;", "captainshark")
+
+    cursor.execute("SELECT * FROM DBUSER WHERE Username=%s;", ("captainshark",))
+    # Get result and close
+    result = cursor.fetchall() # Gets result from query
+    conn.close() # Close the db connection (NOTE: You should do this after each query, otherwise your database may become locked)
+    return result
 # ------------------------ END FUNCTIONS ------------------------ #
 
 
@@ -44,6 +57,11 @@ def get_all_items():
 def home():
     items = get_all_items() # Call defined function to get all items
     return render_template("index.html", items=items) # Return the page to be rendered
+
+@app.route("/user", methods=["GET"])
+def userprofile():
+    user = get_curr_user() # Call defined function to get all items
+    return render_template("user.html", user=user[0]) # Return the page to be rendered
 
 
 # EXAMPLE OF POST REQUEST
