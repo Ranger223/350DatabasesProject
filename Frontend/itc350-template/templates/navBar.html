@@ -9,8 +9,11 @@
         <a href="/orbsys">All Orbital Systems</a>
     </div>
     <div class="navRight">
-        <input type="text" placeholder="Search...">
-        {% if True  : %}
+        <form action="/search" method="post">
+            <input type="text" id="search" name="search" placeholder="Search..." required>
+        </form>
+      
+        {% if True: %}
         <a href="/user">Account</a>
         <div class="divider"></div>
         <a href="#logout">Log Out</a>

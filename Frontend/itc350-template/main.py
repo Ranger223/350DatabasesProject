@@ -33,6 +33,19 @@ def get_orbsys_view():
     conn.close()
     return result
 
+def get_curr_user():
+    # Create a new database connection for each request
+    conn = get_db_connection()  # Create a new database connection
+    cursor = conn.cursor() # Creates a cursor for the connection, you need this to do queries
+    # Query the db
+    #query = ("SELECT * FROM DBUSER WHERE Username=?;", "captainshark")
+
+    cursor.execute("SELECT * FROM DBUSER WHERE Username=%s;", ("captainshark",))
+    # Get result and close
+    result = cursor.fetchall() # Gets result from query
+    conn.close() # Close the db connection (NOTE: You should do this after each query, otherwise your database may become locked)
+    return result
+
 #Get members of a system based on systemID
 def get_system_view(systemid):
     conn = get_db_connection()
@@ -49,6 +62,11 @@ def get_system_view(systemid):
 def get_search_results(search):
     conn = get_db_connection()
     cursor = conn.cursor()
+    query = "SELECT CelBodyName, DIFFERENCE(CelBodyName, %s) FROM CelBodyView where DIFFERENCE(CelBodyName, %s) > 2"
+    cursor.execute(query, (search, search))
+    result = cursor.fetchall()
+    #print(result)
+    return result
 
 def get_all_planets():
     conn = get_db_connection()
@@ -222,7 +240,9 @@ def change_email():
 @app.route("/search", methods=["Post"])
 def search():
     data = request.form
-    return
+    search = data.get("search")
+    items = get_search_results(search)
+    return render_template("searchresults.html", items=items)
 # ------------------------ END ROUTES ------------------------ #
 
 
