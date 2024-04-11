@@ -85,6 +85,50 @@ def get_faction_planets(faction):
     conn.close()
     return result
 
+#get current user
+def get_curr_user():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM DBUSER WHERE Username=%s;", ("captainshark",))
+    result = cursor.fetchall()
+    conn.close()
+    return result
+
+#get current user faction
+def get_curr_user_fac(user):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    FacID = user[5]
+    cursor.execute("SELECT FactionName FROM FACTION WHERE FacID=%d;", (FacID,))
+    result = cursor.fetchall()
+    conn.close()
+    return result
+
+def validate_password(username, currPass):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT PasswordHash FROM DBUSER WHERE Username=%s;", (username,))
+    result = cursor.fetchall()
+    conn.close()
+    if result[0][0] == currPass:
+        return True
+    else:
+        return False
+    
+def update_password(username, newPass):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE DBUSER SET PasswordHash=%s WHERE Username=%s;", (newPass, username))
+    conn.commit()
+    conn.close()
+
+def update_email(username, newEmail):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE DBUSER SET Email=%s WHERE Username=%s;", (newEmail, username))
+    conn.commit()
+    conn.close()
+
 # ------------------------ END FUNCTIONS ------------------------ #
 
 
@@ -100,7 +144,8 @@ def home():
 @app.route("/user", methods=["GET"])
 def userprofile():
     user = get_curr_user() # Call defined function to get all items
-    return render_template("user.html", user=user[0]) # Return the page to be rendered
+    userFac = get_curr_user_fac(user[0])
+    return render_template("user.html", user=user[0], userFac = userFac[0]) # Return the page to be rendered
 
 #shows a user's saved planets
 @app.route("/<userid>/saved", methods=["GET"])
@@ -127,27 +172,45 @@ def systemview(systemid):
     return render_template("systemview.html", items=items)
 
 # EXAMPLE OF POST REQUEST
-@app.route("/new-item", methods=["POST"])
-def add_item():
+@app.route("/update-password", methods=["POST"])
+def change_password():
     try:
         # Get items from the form
         data = request.form
-        item_name = data["name"] # This is defined in the input element of the HTML form on index.html
-        item_quantity = data["quantity"] # This is defined in the input element of the HTML form on index.html
+        curr_pass = data["currPass"] # This is defined in the input element of the HTML form on index.html
+        new_pass = data["newPass"] # This is defined in the input element of the HTML form on index.html
 
-        # TODO: Insert this data into the database
+        user = get_curr_user()
+        if validate_password(user[0][1], curr_pass) != True:
+            flash("Current password was incorrect", "error")
+            return redirect(url_for("userprofile"))
+        else :
+            update_password(user[0][1], new_pass)
+            flash("Password changed successfully", "success")
+            return redirect(url_for("userprofile"))
         
-        # Send message to page. There is code in index.html that checks for these messages
-        flash("Item added successfully", "success")
-        # Redirect to home. This works because the home route is named home in this file
-        return redirect(url_for("home"))
-
     # If an error occurs, this code block will be called
     except Exception as e:
         flash(f"An error occurred: {str(e)}", "error") # Send the error message to the web page
-        return redirect(url_for("home")) # Redirect to home
+        return redirect(url_for("userprofile")) # Redirect to home
     
-@app.route("/search", methods=["POST"])
+@app.route("/update-email", methods=["POST"])
+def change_email():
+    try:
+        # Get items from the form
+        data = request.form
+        new_email = data["newEmail"] # This is defined in the input element of the HTML form on index.html
+        user = get_curr_user()
+        update_email(user[0][1], new_email)
+        flash("Email changed successfully", "success")
+        return redirect(url_for("userprofile"))
+        
+    # If an error occurs, this code block will be called
+    except Exception as e:
+        flash(f"An error occurred: {str(e)}", "error") # Send the error message to the web page
+        return redirect(url_for("userprofile")) # Redirect to home
+
+@app.route("/search", methods=["Post"])
 def search():
     data = request.form
     search = data.get("search")
