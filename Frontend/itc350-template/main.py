@@ -45,6 +45,7 @@ def get_curr_user():
     result = cursor.fetchall() # Gets result from query
     conn.close() # Close the db connection (NOTE: You should do this after each query, otherwise your database may become locked)
     return result
+
 #Get members of a system based on systemID
 def get_system_view(systemid):
     conn = get_db_connection()
@@ -61,6 +62,11 @@ def get_system_view(systemid):
 def get_search_results(search):
     conn = get_db_connection()
     cursor = conn.cursor()
+    query = "SELECT CelBodyName, DIFFERENCE(CelBodyName, %s) FROM CelBodyView where DIFFERENCE(CelBodyName, %s) > 2"
+    cursor.execute(query, (search, search))
+    result = cursor.fetchall()
+    #print(result)
+    return result
 
 def get_all_planets():
     conn = get_db_connection()
@@ -141,10 +147,12 @@ def add_item():
         flash(f"An error occurred: {str(e)}", "error") # Send the error message to the web page
         return redirect(url_for("home")) # Redirect to home
     
-@app.route("/search", methods=["Post"])
+@app.route("/search", methods=["POST"])
 def search():
     data = request.form
-    return
+    search = data.get("search")
+    items = get_search_results(search)
+    return render_template("searchresults.html", items=items)
 # ------------------------ END ROUTES ------------------------ #
 
 
