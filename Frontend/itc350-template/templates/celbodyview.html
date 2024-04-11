@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Interstellar Database </title>
-    <link rel="stylesheet" href="static/css/styles.css">
+    <link rel="stylesheet" href="../static/css/styles.css">
 </head>
 
 <body>
@@ -13,25 +13,26 @@
     {% include 'navBar.html' %}
 
     <div class ="body">
-            <h2> Your Saved Planets </h2>
+            <h2> {{item[2]}} </h2>
             <table>
                 <tr>
-                    <th>Celestial Body</th>
                     <th>Orbital System</th>
                     <th>Type</th>
                     <th>Habitability</th>
                     <th>Colonizable</th>
+                    <th>Mass</th>
+                    <th>Radius</th>
                 </tr>
                 <!-- This is some python jinja2 code. Only existing items will be displayed. -->
-                {% for item in items %}
+                <!-- CelBodyID, OrbSysID, CelBodyName, OrbSysName, Mass, Radius, OrbitalDistance, OrbSysName, CelBodyTypeName, HabName, Colonizable -->
                 <tr>
-                    <td> <a href=" {{'/celbody/%s'%item[0]}} "> {{item[2]}} </a> </td>
-                    <td> <a href=" {{'/systemview/%s'%item[1]}} "> {{item[3]}} </td>
-                    <td> {{item[3]}} </td>
-                    <td> {{item[4]}} </td>
-                    <td> {{item[5]}} </td>
+                    <td> <a href=" {{'/systemview/%s'%item[1]}} "> {{item[3]}} </a> </td>
+                    <td> {{item[8]}} </td>
+                    <td> {{item[9]}} </td>
+                    <td> {{item[10]}} </td>
+                    <td> {{ ((10**item[4])*10000) // 1 / 10000 }} </td>
+                    <td> {{ ((10**item[5])*10000) // 1 / 10000 }} </td>
                 </tr>
-                {% endfor %}
             </table>
             <!--Table with all Planets here. See other systemview.html for reference-->
     </div>

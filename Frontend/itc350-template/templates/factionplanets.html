@@ -13,6 +13,23 @@
     {% include 'navBar.html' %}
 
     <div class ="body">
+        <h2> All orbital systems </h2>
+            <table>
+                <tr>
+                    <th>System Name</th>
+                    <th>Primary Body</th>
+                    <th>Number of Members</th>
+                </tr>
+                <!-- This is some python jinja2 code. Only existing items will be displayed. -->
+                {% for item in items %}
+                <tr>
+                    <td> <a href=" {{'/systemview/%s'%item[3]}} "> {{item[2]}} </a> </td>
+                    <td> {{item[0]}} </td>
+                    <td> {{item[1]}} </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </body>
             <h2> {Faction}'s Planets </h2>
     </div>
 </body>

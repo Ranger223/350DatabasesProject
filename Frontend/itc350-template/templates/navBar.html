@@ -2,13 +2,15 @@
     <div class="navLeft">
         <a href="/">Home</a>
         <div class="divider"></div>
-        <a href="#saved">Saved</a>
+        {% if True  : %}
+        <a href="/saved">Saved</a>
         <div class="divider"></div>
+        {% endif %}
         <a href="/orbsys">All Orbital Systems</a>
     </div>
     <div class="navRight">
         <input type="text" placeholder="Search...">
-        {% if True: %}
+        {% if True  : %}
         <a href="/user">Account</a>
         <div class="divider"></div>
         <a href="#logout">Log Out</a>

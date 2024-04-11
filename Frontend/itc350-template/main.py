@@ -58,6 +58,17 @@ def get_all_planets():
     conn.close()
     return result
 
+def get_saved_planets(uid):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    query = "SELECT CelBodyID, OrbSysID, CelBodyName, OrbSysName, CelBodyTypeName, HabName, Colonizable, FactionName FROM UserSavedView WHERE UID=%s"
+    cursor.execute(query,(uid))
+    result = cursor.fetchall()
+    print(uid)
+    print(result)
+    conn.close()
+    return result
+
 def get_faction_planets(faction):
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -71,7 +82,7 @@ def get_faction_planets(faction):
 def get_curr_user():
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM DBUSER WHERE Username=%s;", ("captainshark",))
+    cursor.execute("SELECT * FROM DBUSER WHERE Username=%s;", ("funkyspacesattellite",))
     result = cursor.fetchall()
     conn.close()
     return result
@@ -111,11 +122,24 @@ def update_email(username, newEmail):
     conn.commit()
     conn.close()
 
+def cel_body_view(celbodyid):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT CelBodyID, OrbSysID, CelBodyName, OrbSysName, Mass, Radius, OrbitalDistance, OrbSysName, CelBodyTypeName, HabName, Colonizable FROM CelBodyView WHERE CelBodyID=%s;", (celbodyid,))
+    result = cursor.fetchall()
+    conn.close()
+    return result
+
 # ------------------------ END FUNCTIONS ------------------------ #
 
 
 # ------------------------ BEGIN ROUTES ------------------------ #
 # EXAMPLE OF GET REQUEST
+
+@app.route("/celbody/<celbodyid>", methods=["GET"])
+def celbodyview(celbodyid):
+    data = cel_body_view(celbodyid)
+    return render_template("celbodyview.html", item = data[0])
 
 #show all planets
 @app.route("/", methods=["GET"])
@@ -130,10 +154,13 @@ def userprofile():
     return render_template("user.html", user=user[0], userFac = userFac[0]) # Return the page to be rendered
 
 #shows a user's saved planets
-@app.route("/<userid>/saved", methods=["GET"])
-def usersaved(userid):
-
-    return render_template("userplanets.html")
+@app.route("/saved", methods=["GET"])
+def usersaved():
+    user = get_curr_user()
+    UID = 1
+#    UID = user[0][0]
+    data = get_saved_planets(UID)
+    return render_template("userplanets.html", items=data)
 
 #shows a faction's planets
 @app.route("/faction/<facid>") # //4/faciont
