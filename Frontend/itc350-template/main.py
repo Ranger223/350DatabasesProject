@@ -166,18 +166,16 @@ def register_user(username, password, email):
 def login_user(username, password):
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT PasswordHash FROM DBUSERS WHERE Username =%s;", (username))
+    cursor.execute("SELECT PasswordHash FROM DBUSER WHERE Username = %s;", (username,))
     result = cursor.fetchone()
-    password_bytes = password.encode('utf-8')
-    passResult = bcrypt.compare(password_bytes, result)
     conn.close()
     if result:
-        if passResult:
-            return render_template("userplanets.html")
-        else:
-            return render_template("login.html")
-    else:
-        return render_template("login.html")    
+        hashedPassword = result[0].encode('utf-8')
+        passwordBytes = password.encode('utf-8')
+        if bcrypt.checkpw(passwordBytes, hashedPassword):
+            return True
+    return False
+  
     
 
 # ------------------------ END FUNCTIONS ------------------------ #
@@ -233,7 +231,13 @@ def systemview(systemid):
 #login page access
 @app.route("/loggering", methods=["POST"])
 def loginview():
-    return render_template("home.html")
+    data = request.form
+    username = data["username"]
+    password = data["password"]
+    if login_user(username, password):
+        return render_template("userplanets.html")
+    else:
+        return render_template("home.html")
 
 @app.route("/registering", methods=["POST"])
 def registeruser():
