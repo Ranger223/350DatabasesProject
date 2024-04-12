@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="static/css/styles.css">
+    <style>
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    {% include 'background.html' %}
+    {% include 'navBar.html' %}
+    <!-- Show error or success messages if there are any -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        <!-- Check to see if there are any messages to show -->
+        {% if messages %}
+            {% for category, message in messages %}
+                <p class="alert {{ category }}">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class ="body">
+        <h1 class="center">Welcome {{user[1]}}!</h2>
+    
+        <h2>Email: {{user[2]}}</h2>
+        <h2>Faction: {{userFac[0]}}</h2>
+        <h2>Clearance Level: {{user[4]}}</h2>
+        <h2>Change Password:</h2>
+        <form action="/update-password" method="post">
+            <!-- Name -->
+            <label for="currPass">Current Password:</label>
+            <input type="password" id="currPass" name="currPass" required>
+            <br>
+            <!-- Quantity -->
+            <label for="newPass">New Password:</label>
+            <input type="password" id="newPass" name="newPass" required>
+            <br>
+            <!-- Submit Button -->
+            <input style="margin-left: 4em;" type="submit" value="Submit">
+        </form>
+
+        <h2>Change Email:</h2>
+        <form action="/update-email" method="post">
+            <label for="newEmail">New Email:</label>
+            <input type="text" id="newEmail" name="newEmail" required>
+            <br>
+            <!-- Submit Button -->
+            <input style="margin-left: 4em;" type="submit" value="Submit">
+        </form>
+        
+    </div>
+    
+</body>
+</html>
