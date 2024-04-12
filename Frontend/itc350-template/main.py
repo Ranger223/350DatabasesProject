@@ -149,6 +149,16 @@ def cel_body_view(celbodyid):
     conn.close()
     return result
 
+def register_user(username, password, email):
+    clearance = 1
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO DBUSER (Username, PasswordHash, Email, Clearance) VALUES (%s, %s, %s, %s)", (username, password, email, clearance))
+    conn.commit()
+    conn.close()
+    result = 1
+    return result
+
 # ------------------------ END FUNCTIONS ------------------------ #
 
 
@@ -198,6 +208,28 @@ def obsys():
 def systemview(systemid):
     items = get_system_view(systemid)
     return render_template("systemview.html", items=items)
+
+#login page access
+@app.route("/loggering", methods=["POST"])
+def loginview():
+    return render_template("home.html")
+
+@app.route("/registering", methods=["POST"])
+def registeruser():
+    data = request.form
+    username = data["username"]
+    password = data["password"]
+    email = data["email"]
+    register_user(username, password, email)
+    return render_template("userplanets.html")
+
+@app.route("/register", methods=["GET"])
+def getregister():
+    return render_template("register.html")
+
+@app.route("/login", methods=["GET"])
+def getlogin():
+    return render_template("login.html")
 
 # EXAMPLE OF POST REQUEST
 @app.route("/update-password", methods=["POST"])

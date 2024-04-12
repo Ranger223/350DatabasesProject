@@ -6,6 +6,33 @@ body {
     border: 0;
 }
 
+.login-form {
+    text-align: center;
+    margin: auto;
+    width:250px;
+}
+
+.login {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background: linear-gradient(to bottom, #2d2d3f, #282830);
+    overflow: auto;
+    height: 104px;
+    padding: 0;
+    margin: 0;
+    top: 0;
+    z-index: 100;
+}
+
+.login-user{
+    float: right;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+}
+
 .navbar input[type=text] {
     padding: 1em;
     border: none;
