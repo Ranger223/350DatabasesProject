@@ -11,6 +11,7 @@ app = Flask(__name__)
 app.secret_key = os.getenv("SECRET")
 
 
+
 # ------------------------ BEGIN FUNCTIONS ------------------------ #
 # Function to retrieve DB connection
 def get_db_connection():
@@ -67,11 +68,39 @@ def get_faction_planets(faction):
     conn.close()
     return result
 
+def login_user(username):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    query = "SELECT * FROM DBUSER WHERE Username = %s"
+    cursor.execute(query,(username,))
+    result = cursor.fetchall()
+    conn.close()
+    return result
+
+
+
 # ------------------------ END FUNCTIONS ------------------------ #
 
 
 # ------------------------ BEGIN ROUTES ------------------------ #
 # EXAMPLE OF GET REQUEST
+
+#login user
+@app.route("/login", methods=["GET"])
+def login():
+    # if session
+    return render_template("/<userid>/saved")
+    # if not session
+
+#register user
+@app.route("/register", methods=["GET"])
+def register():
+    return render_template("register.html")
+
+#logout user
+@app.route("/logout", methods=["GET"])
+def logout():
+    return render_template("login.html")
 
 #show all planets
 @app.route("/", methods=["GET"])
@@ -79,14 +108,16 @@ def home():
     #I reccommend making a function like the ones above to get all planets
     return render_template("home.html")
 
-#shows a user's saved planets
+#shows a user's saved planets 
+#TODO redirect if no session token
 @app.route("/<userid>/saved", methods=["GET"])
 def usersaved(userid):
-
+    #if session
     return render_template("userplanets.html")
+    #if not session
 
 #shows a faction's planets
-@app.route("/<facid>/faction") # //4/faciont
+@app.route("/<facid>/faction") # //4/faction
 def factionplanet(facid):
     get_faction_planets(facid)
     return render_template("factionplanets.html")
