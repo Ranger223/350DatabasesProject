@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template, request, redirect, url_for, flash
 import pymssql
 from dotenv import load_dotenv
+import bcrypt
 
 # Load environment variables from .env file
 load_dotenv()
@@ -150,14 +151,34 @@ def cel_body_view(celbodyid):
     return result
 
 def register_user(username, password, email):
+    salt = bcrypt.gensalt()
+    password_bytes = password.encode('utf-8')
+    passwordhash = bcrypt.hashpw(password_bytes, salt)
     clearance = 1
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO DBUSER (Username, PasswordHash, Email, Clearance) VALUES (%s, %s, %s, %s)", (username, password, email, clearance))
+    cursor.execute("INSERT INTO DBUSER (Username, PasswordHash, Email, Clearance) VALUES (%s, %s, %s, %s)", (username, passwordhash, email, clearance))
     conn.commit()
     conn.close()
     result = 1
     return result
+
+def login_user(username, password):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT PasswordHash FROM DBUSERS WHERE Username =%s;", (username))
+    result = cursor.fetchone()
+    password_bytes = password.encode('utf-8')
+    passResult = bcrypt.compare(password_bytes, result)
+    conn.close()
+    if result:
+        if passResult:
+            return render_template("userplanets.html")
+        else:
+            return render_template("login.html")
+    else:
+        return render_template("login.html")    
+    
 
 # ------------------------ END FUNCTIONS ------------------------ #
 

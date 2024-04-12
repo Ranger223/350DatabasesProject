@@ -7,18 +7,18 @@
 </head>
 <body>
   {% include 'background.html' %}
-<div class="login-form">
-  <form>
-    <h1>Login</h1>
-    <div>
-      <input type="text" id="username" name="username" placeholder="Username">
-      <input type="password" id="password" name="password" placeholder="Password">
-    </div>
-    <div class="navbar">
-      <a href="/loggering" type="submit">Login</button>
-      <a href="/register" type="submit">Register</button>
-    </div>
-  </form>
+  <div class="login-form">
+    <form action="/loggering" method="post">
+      <h1>Login</h1>
+      <div>
+        <input type="text" id="username" name="username" placeholder="Username">
+        <input type="password" id="password" name="password" placeholder="Password">
+      </div>
+      <div class="navbar">
+        <button type="submit">Login</button>
+      </div>
+    </form>
+  </div>
 </div>
 </body>
 </html>
