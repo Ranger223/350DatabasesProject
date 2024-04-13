@@ -176,8 +176,6 @@ def login_user(username, password):
             return True
     return False
   
-    
-
 # ------------------------ END FUNCTIONS ------------------------ #
 
 
