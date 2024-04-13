@@ -3,6 +3,8 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 import pymssql
 from dotenv import load_dotenv
 import bcrypt
+from flask import Flask, session
+from flask_session import Session
 
 # Load environment variables from .env file
 load_dotenv()
@@ -11,7 +13,8 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET")
 
-
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SECRET_KEY'] = 'xIc1m98'
 
 # ------------------------ BEGIN FUNCTIONS ------------------------ #
 # Function to retrieve DB connection
@@ -158,6 +161,9 @@ def register_user(username, password, email):
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("INSERT INTO DBUSER (Username, PasswordHash, Email, Clearance) VALUES (%s, %s, %s, %s)", (username, passwordhash, email, clearance))
+    cursor.execute("SELECT Username, UID, Clearance FROM DBUSER WHERE Username = %s;", (username,))
+    result = cursor.fetchone()
+    create_session(result[0], result[1], result[2])
     conn.commit()
     conn.close()
     result = 1
@@ -168,13 +174,39 @@ def login_user(username, password):
     cursor = conn.cursor()
     cursor.execute("SELECT PasswordHash FROM DBUSER WHERE Username = %s;", (username,))
     result = cursor.fetchone()
-    conn.close()
     if result:
         hashedPassword = result[0].encode('utf-8')
         passwordBytes = password.encode('utf-8')
         if bcrypt.checkpw(passwordBytes, hashedPassword):
+            cursor.execute("SELECT Username, UID, Clearance FROM DBUSER WHERE Username = %s;", (username,))
+            result = cursor.fetchone()
+            create_session(result[0], result[1], result[2])
+            conn.close()
             return True
+        conn.close()
     return False
+
+def create_session(username, userID, clearance):
+    session['username'] = 'username'
+    session['userID'] = 'userID'
+    session['clearance'] = 'clearance'
+    return "success"
+
+def get_session_username():
+    username = session.get('username')
+    return username
+
+def get_session_userID():
+    userID = session.get('userID')
+    return userID
+
+def get_session_clearance():
+    clearance = session.get('clearance')
+    return clearance
+
+def end_session():
+    session.clear()
+    return "success"
   
 # ------------------------ END FUNCTIONS ------------------------ #
 
