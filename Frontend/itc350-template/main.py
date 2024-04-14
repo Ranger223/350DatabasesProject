@@ -190,9 +190,9 @@ def login_user(username, password):
     return False
 
 def create_session(username, userID, clearance):
-    session['username'] = 'username'
-    session['userID'] = 'userID'
-    session['clearance'] = 'clearance'
+    session['username'] = username
+    session['userID'] = userID
+    session['clearance'] = clearance
     return "success"
 
 def get_session_username():
