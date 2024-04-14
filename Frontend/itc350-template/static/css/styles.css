@@ -9,7 +9,11 @@ body {
 .login-form {
     text-align: center;
     margin: auto;
+    margin-top: 15%;
     width:250px;
+    background-color: rgba(44, 44, 78, 0.8);
+    padding: 10px;
+    border-radius: 3px;
 }
 
 .login {
