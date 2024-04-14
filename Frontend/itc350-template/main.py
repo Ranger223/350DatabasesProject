@@ -59,8 +59,6 @@ def get_system_view(systemid):
     query = "SELECT CelBodyName, Mass, Radius, CelBodyTypeName, HabName, Colonizable, FactionName, OrbSysName FROM OrbSysView WHERE OrbSysID=%s" 
     cursor.execute(query,(systemid))
     result = cursor.fetchall()
-    print(systemid)
-    print(result)
     conn.close()
     return result
 
@@ -70,7 +68,6 @@ def get_search_results(search):
     query = "SELECT CelBodyName, DIFFERENCE(CelBodyName, %s) FROM CelBodyView where DIFFERENCE(CelBodyName, %s) > 2"
     cursor.execute(query, (search, search))
     result = cursor.fetchall()
-    #print(result)
     return result
 
 def get_all_planets():
@@ -87,8 +84,6 @@ def get_saved_planets(uid):
     query = "SELECT CelBodyID, OrbSysID, CelBodyName, OrbSysName, CelBodyTypeName, HabName, Colonizable, FactionName FROM UserSavedView WHERE UID=%s"
     cursor.execute(query,(uid))
     result = cursor.fetchall()
-    print(uid)
-    print(result)
     conn.close()
     return result
 
@@ -238,8 +233,7 @@ def userprofile():
 @app.route("/saved", methods=["GET"])
 def usersaved():
     user = get_curr_user()
-    UID = 1
-#    UID = user[0][0]
+    UID = session['userID']
     data = get_saved_planets(UID)
     return render_template("userplanets.html", items=data)
 
@@ -271,6 +265,11 @@ def loginview():
         return render_template("userplanets.html")
     else:
         return render_template("home.html")
+    
+@app.route("/logout", methods=["GET"])
+def logout():
+    end_session()
+    return render_template("home.html")
 
 @app.route("/registering", methods=["POST"])
 def registeruser():
