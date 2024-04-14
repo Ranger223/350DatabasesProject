@@ -154,20 +154,23 @@ def cel_body_view(celbodyid):
     return result
 
 def register_user(username, password, email):
-    salt = bcrypt.gensalt()
-    password_bytes = password.encode('utf-8')
-    passwordhash = bcrypt.hashpw(password_bytes, salt)
-    clearance = 1
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO DBUSER (Username, PasswordHash, Email, Clearance) VALUES (%s, %s, %s, %s)", (username, passwordhash, email, clearance))
-    cursor.execute("SELECT Username, UID, Clearance FROM DBUSER WHERE Username = %s;", (username,))
-    result = cursor.fetchone()
-    create_session(result[0], result[1], result[2])
-    conn.commit()
-    conn.close()
-    result = 1
-    return result
+    if password and email and username:
+        salt = bcrypt.gensalt()
+        password_bytes = password.encode('utf-8')
+        passwordhash = bcrypt.hashpw(password_bytes, salt)
+        clearance = 1
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO DBUSER (Username, PasswordHash, Email, Clearance) VALUES (%s, %s, %s, %s)", (username, passwordhash, email, clearance))
+        cursor.execute("SELECT Username, UID, Clearance FROM DBUSER WHERE Username = %s;", (username,))
+        result = cursor.fetchone()
+        create_session(result[0], result[1], result[2])
+        conn.commit()
+        conn.close()
+        result = 1
+        return result
+    else:
+        return 0
 
 def login_user(username, password):
     conn = get_db_connection()
