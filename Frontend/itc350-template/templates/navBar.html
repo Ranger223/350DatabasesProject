@@ -2,7 +2,7 @@
     <div class="navLeft">
         <a href="/">Home</a>
         <div class="divider"></div>
-        {% if True  : %}
+        {% if session['userID']: %}
         <a href="/saved">Saved</a>
         <div class="divider"></div>
         {% endif %}
@@ -13,12 +13,12 @@
             <input type="text" id="search" name="search" placeholder="Search..." required>
         </form>
       
-        {% if True: %}
+        {% if session['userID']: %}
         <a href="/user">Account</a>
         <div class="divider"></div>
-        <a href="#logout">Log Out</a>
+        <a href="logout">Log Out</a>
         {% else %}
-        <a href="#login">Log In</a>
+        <a href="login">Log In</a>
         {% endif %}
     </div>
 </nav>
