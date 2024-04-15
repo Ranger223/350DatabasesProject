@@ -65,7 +65,7 @@ def get_system_view(systemid):
 def get_search_results(search):
     conn = get_db_connection()
     cursor = conn.cursor()
-    query = "SELECT CelBodyName, DIFFERENCE(CelBodyName, %s) FROM CelBodyView where DIFFERENCE(CelBodyName, %s) > 2"
+    query = "SELECT CelBodyName, CelBodyID, DIFFERENCE(CelBodyName, %s) FROM CELESTIALBODY where DIFFERENCE(CelBodyName, %s) > 2"
     cursor.execute(query, (search, search))
     result = cursor.fetchall()
     return result
