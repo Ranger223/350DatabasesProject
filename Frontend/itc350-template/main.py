@@ -32,7 +32,7 @@ def get_orbsys_view():
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    query = "SELECT CelBodyName as 'Primary Body', BodyCount, OrbSysName, OSystemID FROM OrbMemCount ORDER BY OrbSysName"
+    query = "SELECT OSystemID, CelBodyID, CelBodyName as 'Primary Body', BodyCount, OrbSysName FROM OrbMemCount ORDER BY OrbSysName"
     cursor.execute(query)
     result = cursor.fetchall()
     conn.close()
@@ -56,7 +56,7 @@ def get_system_view(systemid):
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    query = "SELECT CelBodyName, Mass, Radius, CelBodyTypeName, HabName, Colonizable, FactionName, OrbSysName FROM OrbSysView WHERE OrbSysID=%s" 
+    query = "SELECT CelBodyID, CelBodyName, Mass, Radius, CelBodyTypeName, HabName, Colonizable, FactionName, OrbSysName FROM OrbSysView WHERE OrbSysID=%s" 
     cursor.execute(query,(systemid))
     result = cursor.fetchall()
     conn.close()
