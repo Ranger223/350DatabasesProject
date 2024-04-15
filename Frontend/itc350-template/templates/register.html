@@ -7,6 +7,17 @@
 </head>
 <body>
   {% include 'background.html' %}
+  {% include 'navBar.html' %}
+  <!-- Show error or success messages if there are any -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  <!-- Check to see if there are any messages to show -->
+    {% if messages %}
+      {% for category, message in messages %}
+          <p class="alert {{ category }}">{{ message }}</p>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
   <div class="login-form">
     <form action="/registering" method="post">
       <h1 class="center">Register</h1>
@@ -20,6 +31,9 @@
           <a style="width:87%;height:85%;">Register</a>
         </div>
       </button>
+      <div class="navbar" style="height:85%;">
+        <a style="width: 87%; height:65%;" href="/login">Login</button>
+      </div>
     </form>
   </div>
 </body>
