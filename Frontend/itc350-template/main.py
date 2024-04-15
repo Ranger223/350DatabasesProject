@@ -114,6 +114,8 @@ def get_curr_user_fac(user):
     conn = get_db_connection()
     cursor = conn.cursor()
     FacID = user[5]
+    if FacID == None:
+        FacID = 0
     cursor.execute("SELECT FactionName FROM FACTION WHERE FacID=%d;", (FacID))
     result = cursor.fetchall()
     conn.close()

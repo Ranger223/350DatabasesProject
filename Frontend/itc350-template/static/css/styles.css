@@ -158,9 +158,10 @@ button:hover {
     color: black;
 }
 
+
 input, textarea, select {
     background-color: #FFFFFF;
-    color: #DCDCDC;
+    color: #000000;
     border: 2px solid gray;
     border-radius: 4px;
     transition: background-color 0.5s ease;
