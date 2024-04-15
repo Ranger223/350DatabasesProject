@@ -56,7 +56,7 @@ def get_system_view(systemid):
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    query = "SELECT CelBodyID, CelBodyName, Mass, Radius, CelBodyTypeName, HabName, Colonizable, OrbSysName FROM OrbSysView WHERE OrbSysID=%s" 
+    query = "SELECT CBID, CelBodyName, Mass, Radius, CelBodyTypeName, HabName, Colonizable, OrbSysName FROM OrbSysView WHERE OrbSysID=%s" 
     cursor.execute(query,(systemid))
     result = cursor.fetchall()
     conn.close()
@@ -68,6 +68,7 @@ def get_search_results(search):
     query = "SELECT CelBodyName, CelBodyID, DIFFERENCE(CelBodyName, %s) FROM CELESTIALBODY where DIFFERENCE(CelBodyName, %s) > 2"
     cursor.execute(query, (search, search))
     result = cursor.fetchall()
+    conn.close()
     return result
 
 def get_all_planets():
