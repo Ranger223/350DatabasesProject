@@ -261,6 +261,14 @@ def join_faction(UID, FacID):
         print(e)
         return 0
 
+def get_all_factions():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT FacID, FactionName FROM FACTION")
+    result = cursor.fetchall()
+    conn.close()
+    return result
+
 # ------------------------ END FUNCTIONS ------------------------ #
 
 
@@ -318,7 +326,7 @@ def userprofile():
     #print(user[5])
     userFac = get_curr_user_fac(user)
     #print(userFac)
-    return render_template("user.html", user=user, userFac = userFac[0]) # Return the page to be rendered
+    return render_template("user.html", user=user, userFac = userFac[0], factions = get_all_factions()) # Return the page to be rendered
 
 #shows a user's saved planets
 @app.route("/saved", methods=["GET"])
