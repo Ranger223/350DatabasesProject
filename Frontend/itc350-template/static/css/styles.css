@@ -170,6 +170,16 @@ button:hover {
     color: black;
 }
 
+.noHorizPad {
+    padding-left:0;
+    padding-right:0;
+}
+
+.center {
+    text-align: center;
+    padding-left:0;
+    padding-right:0;
+}
 
 input, textarea, select {
     background-color: #FFFFFF;

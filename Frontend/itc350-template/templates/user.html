@@ -27,20 +27,20 @@
     <div class ="body">
     
         <div style="width:80%; text-align: center; float:left;">
-            <div class="user-form">
+            <div class="user-form" style="text-align: center;">
                 <h1 class="center">Welcome {{user[1]}}!</h2>
                 
-                <h2>Email: {{user[2]}}</h2>
-                <h2>Faction: {{userFac[0]}}</h2>
-                <h2>Clearance Level: {{user[4]}}</h2>
-                <h2>Change Password:</h2>
+                <h2 class="noHorizPad">Email: {{user[2]}}</h2>
+                <h2 class="noHorizPad">Faction: {{userFac[0]}}</h2>
+                <h2 class="noHorizPad">Clearance Level: {{user[4]}}</h2>
+                <h2 class="noHorizPad">Change Password:</h2>
                 <form action="/update-password" method="post">
                     <!-- Name -->
-                    <label for="currPass">Current Password:</label>
+                    <label for="currPass" class="noHorizPad">Current Password:</label>
                     <input type="password" id="currPass" name="currPass" required>
                     <br>
                     <!-- Quantity -->
-                    <label for="newPass">New Password:</label>
+                    <label for="newPass" class="noHorizPad">New Password:</label>
                     <input type="password" id="newPass" name="newPass" required>
                     <br>
                     <!-- Submit Button -->
@@ -49,7 +49,7 @@
 
                 <h2>Change Email:</h2>
                 <form action="/update-email" method="post">
-                    <label for="newEmail">New Email:</label>
+                    <label for="newEmail" class="noHorizPad">New Email:</label>
                     <input type="text" id="newEmail" name="newEmail" required>
                     <br>
                     <!-- Submit Button -->
