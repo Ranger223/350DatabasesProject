@@ -2,12 +2,12 @@ USE [CBIS]
 GO
 CREATE TABLE [dbo].[FACTION](
 	[FacID] [int] IDENTITY(1,1) NOT NULL,
-	[FactionName] [varchar](32) NULL,
+	[FactionName] [varchar](32) NOT NULL,
 	PRIMARY KEY (FacID)
 );
 CREATE TABLE [dbo].[HABITABILITY](
 	[HabID] [int] IDENTITY(1,1) NOT NULL,
-	[HabName] [varchar](24) NULL,
+	[HabName] [varchar](24) NOT NULL,
 	[Colonizable] [bit] NOT NULL,
 	PRIMARY KEY(HabID)
 );
@@ -26,7 +26,7 @@ CREATE TABLE [dbo].[DBUSER](
 
 CREATE TABLE [dbo].[CelBodTYPE](
 	[CelBodyTypeID] [int] IDENTITY(1,1) NOT NULL,
-	[CelBodyTypeName] [varchar](30) NULL,
+	[CelBodyTypeName] [varchar](30) NOT NULL,
 	[HabID] [int] NOT NULL DEFAULT 0,
 	PRIMARY KEY(CelBodyTypeID),
 	FOREIGN KEY (HabID) REFERENCES HABITABILITY(HabID) ON DELETE SET DEFAULT ON UPDATE CASCADE
@@ -34,14 +34,14 @@ CREATE TABLE [dbo].[CelBodTYPE](
 
 CREATE TABLE [dbo].[ORBITALSYSTEM](
 	[OrbSysID] [int] IDENTITY(1,1) NOT NULL,
-	[OrbSysName] [varchar](24) NULL,
+	[OrbSysName] [varchar](24) NOT NULL,
 	[CelBodyID] [int] NULL,
 	PRIMARY KEY (OrbSysID),
 );
 
 CREATE TABLE [dbo].[CELESTIALBODY](
 	[CelBodyID] [int] IDENTITY(1,1) NOT NULL,
-	[CelBodyName] [varchar](30) NULL,
+	[CelBodyName] [varchar](30) NOT NULL,
 	[Mass] [decimal](10, 3) NULL,
 	[Radius] [decimal](10, 3) NULL,
 	[OrbitalDistance] [decimal](10, 3) NULL,
