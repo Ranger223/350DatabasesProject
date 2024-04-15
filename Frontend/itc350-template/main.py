@@ -90,7 +90,7 @@ def get_saved_planets(uid):
 def get_faction_planets(faction):
     conn = get_db_connection()
     cursor = conn.cursor()
-    query = "SELECT * FROM FacConVeiw WHERE FactionName = %s"
+    query = "SELECT * FROM FacConView WHERE FactionName = %s"
     cursor.execute(query,(faction))
     result = cursor.fetchall()
     conn.close()
@@ -154,6 +154,8 @@ def cel_body_view(celbodyid):
             result.append( True )
     else:
         result.append( False )
+    cursor.execute ("SELECT CelBodyID, FacID, FactionName FROM FacConView WHERE CelBodyID = %s", (celbodyid))
+    result.append( cursor.fetchall()  )
     conn.close()
     return result
 
@@ -277,7 +279,7 @@ def unsaveplanet(celbodyid):
 def celbodyview(celbodyid):
     data = cel_body_view(celbodyid)
     print(data[-1])
-    return render_template("celbodyview.html", item = data[0], saved = data[-1])
+    return render_template("celbodyview.html", item = data[0], saved = data[1], factions=enumerate(data[2]), FacLen=len(data[2]))
 
 #show all planets
 @app.route("/", methods=["GET"])

@@ -40,6 +40,26 @@
                     <td colspan="6" class="tableButton"><a href="/unsave/{{item[0]}}"><div>Unsave</div></a></td>
                     {% endif %}
                 </tr>
+                <tr>
+                    <td colspan="6">Factions:</td>
+                </tr>
+                <tr>
+                    {% if FacLen == 0 %}
+                    <td colspan="6">No factions have a presence here.</td>
+                    {% else %}
+                    {% for faction in factions %}
+                    {% if faction[0] % 6 == 0 and faction[0] != 0 %}
+                    </tr>
+                    <tr>
+                    {% endif %} 
+                    {% if faction[0] == FacLen - 1 %}
+                    <td colspan="{{6-(faction[0]%6)}}" class="tableButton"><a href="/faction/{{faction[1][1]}}"><div>{{faction[1][2]}}</div></a></td>
+                    {% else %}
+                    <td class="tableButton"><a href="/faction/{{faction[1][1]}}"><div>{{faction[1][2]}}</div></a></td>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                </tr>
             </table>
             <!--Table with all Planets here. See other systemview.html for reference-->
     </div>
