@@ -283,7 +283,7 @@ def loginview():
 @app.route("/logout", methods=["GET"])
 def logout():
     end_session()
-    return render_template("home.html")
+    return redirect(url_for("home"))
 
 @app.route("/registering", methods=["POST"])
 def registeruser():
