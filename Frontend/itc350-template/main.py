@@ -90,10 +90,13 @@ def get_saved_planets(uid):
 def get_faction_planets(faction):
     conn = get_db_connection()
     cursor = conn.cursor()
-    query = "SELECT * FROM FacConView WHERE FactionName = %s"
-    cursor.execute(query,(faction))
-    result = cursor.fetchall()
+    cursor.execute("SELECT CelBodyID, OrbSysID, CelBodyName, OrbSysName, CelBodyTypeName, FactionName FROM FacConView WHERE FacID=%d;", (faction))
+    result = []
+    result.append(cursor.fetchall())
+    cursor.execute("SELECT FactionName FROM FACTION WHERE FacID=%d;", (faction))
+    result.append(cursor.fetchall())
     conn.close()
+    print(result)
     return result
 
 #get current user
@@ -110,7 +113,7 @@ def get_curr_user_fac(user):
     conn = get_db_connection()
     cursor = conn.cursor()
     FacID = user[5]
-    cursor.execute("SELECT FactionName FROM FACTION WHERE FacID=%d;", (FacID,))
+    cursor.execute("SELECT FactionName FROM FACTION WHERE FacID=%d;", (FacID))
     result = cursor.fetchall()
     conn.close()
     return result
@@ -309,8 +312,8 @@ def usersaved():
 #shows a faction's planets
 @app.route("/faction/<facid>") # //4/faciont
 def factionplanet(facid):
-    get_faction_planets(facid)
-    return render_template("factionplanets.html")
+    facinfo = get_faction_planets(facid)
+    return render_template("factionplanets.html", factionInfo=facinfo[0], facName=facinfo[1][0][0])
 
 #displays All orbital systems
 @app.route("/orbsys", methods=["GET"])
