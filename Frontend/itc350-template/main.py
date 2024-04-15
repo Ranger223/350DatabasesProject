@@ -145,6 +145,12 @@ def cel_body_view(celbodyid):
     cursor = conn.cursor()
     cursor.execute("SELECT CelBodyID, OrbSysID, CelBodyName, OrbSysName, Mass, Radius, OrbitalDistance, OrbSysName, CelBodyTypeName, HabName, Colonizable FROM CelBodyView WHERE CelBodyID=%s;", (celbodyid,))
     result = cursor.fetchall()
+    cursor.execute ("SELECT * FROM SAVED WHERE UID = %s AND CelBodyID = %s", (session['userID'], celbodyid))
+    data = cursor.fetchall()
+    if not data:
+        result.append( False )
+    else:
+        result.append( True )
     conn.close()
     return result
 
@@ -214,16 +220,61 @@ def all_body_view():
     conn.close()
     return result
 
+def save_planet(UID, CelBodyID):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO SAVED (UID, CelBodyID) VALUES (%s, %s)", (UID, CelBodyID))
+        conn.commit()
+        conn.close()
+        return 1
+    except Exception as e:
+        print(e)
+        return 0
+
+def unsave_planet(UID, CelBodyID):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM SAVED WHERE UID = %s AND CelBodyID = %s", (UID, CelBodyID))
+        conn.commit()
+        conn.close()
+        return 1
+    except Exception as e:
+        print(e)
+        return 0
+    
 # ------------------------ END FUNCTIONS ------------------------ #
 
 
 # ------------------------ BEGIN ROUTES ------------------------ #
 # EXAMPLE OF GET REQUEST
 
+@app.route("/save/<celbodyid>", methods=["GET"])
+def saveplanet(celbodyid):
+    if(session['userID'] == None):
+        return redirect(url_for("getlogin"))
+    UID = session['userID']
+    if celbodyid != 0 and save_planet(UID, celbodyid):
+        return redirect(url_for("celbodyview", celbodyid=celbodyid))
+    else:
+        return redirect(url_for("home"))
+
+@app.route("/unsave/<celbodyid>", methods=["GET"])
+def unsaveplanet(celbodyid):
+    if(session['userID'] == None):
+        return redirect(url_for("getlogin"))
+    UID = session['userID']
+    if unsave_planet(UID, celbodyid):
+        return redirect(url_for("celbodyview", celbodyid=celbodyid))
+    else:
+        return redirect(url_for("home"))
+
 @app.route("/celbody/<celbodyid>", methods=["GET"])
 def celbodyview(celbodyid):
     data = cel_body_view(celbodyid)
-    return render_template("celbodyview.html", item = data[0])
+    print(data[-1])
+    return render_template("celbodyview.html", item = data[0], saved = data[-1])
 
 #show all planets
 @app.route("/", methods=["GET"])

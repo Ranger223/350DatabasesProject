@@ -33,6 +33,13 @@
                     <td> {{ ((10**item[4])*10000) // 1 / 10000 }} </td>
                     <td> {{ ((10**item[5])*10000) // 1 / 10000 }} </td>
                 </tr>
+                <tr>
+                    {% if session['userID'] and not saved: %}
+                    <td colspan="6"><a href="/save/{{item[0]}}">Save</a></td>
+                    {% elif session['userID'] and saved: %}
+                    <td colspan="6"><a href="/unsave/{{item[0]}}">Unsave</a></td>
+                    {% endif %}
+                </tr>
             </table>
             <!--Table with all Planets here. See other systemview.html for reference-->
     </div>
