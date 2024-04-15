@@ -38,19 +38,6 @@ def get_orbsys_view():
     conn.close()
     return result
 
-def get_curr_user():
-    # Create a new database connection for each request
-    conn = get_db_connection()  # Create a new database connection
-    cursor = conn.cursor() # Creates a cursor for the connection, you need this to do queries
-    # Query the db
-    #query = ("SELECT * FROM DBUSER WHERE Username=?;", "captainshark")
-
-    cursor.execute("SELECT * FROM DBUSER WHERE Username=%s;", ("captainshark",))
-    # Get result and close
-    result = cursor.fetchall() # Gets result from query
-    conn.close() # Close the db connection (NOTE: You should do this after each query, otherwise your database may become locked)
-    return result
-
 #Get members of a system based on systemID
 def get_system_view(systemid):
     conn = get_db_connection()
@@ -124,18 +111,25 @@ def get_curr_user_fac(user):
 def validate_password(username, currPass):
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT PasswordHash FROM DBUSER WHERE Username=%s;", (username,))
-    result = cursor.fetchall()
+    cursor.execute("SELECT PasswordHash FROM DBUSER WHERE Username = %s;", (username,))
+    result = cursor.fetchone()
+    if result:
+        hashedPassword = result[0].encode('utf-8')
+        passwordBytes = currPass.encode('utf-8')
+        if bcrypt.checkpw(passwordBytes, hashedPassword):
+            return True
+        else:
+            return False
     conn.close()
-    if result[0][0] == currPass:
-        return True
-    else:
-        return False
+    
     
 def update_password(username, newPass):
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("UPDATE DBUSER SET PasswordHash=%s WHERE Username=%s;", (newPass, username))
+    salt = bcrypt.gensalt()
+    password_bytes = newPass.encode('utf-8')
+    passwordhash = bcrypt.hashpw(password_bytes, salt)
+    cursor.execute("UPDATE DBUSER SET PasswordHash=%s WHERE Username=%s;", (passwordhash, username))
     conn.commit()
     conn.close()
 
@@ -398,12 +392,13 @@ def change_password():
         new_pass = data["newPass"] # This is defined in the input element of the HTML form on index.html
         assert curr_pass != "", "Current password cannot be empty" # Check if the current password is empty
         assert new_pass != "", "New password cannot be empty" # Check if the new password is empty
-        user = get_curr_user()
-        if validate_password(user[0][1], curr_pass) != True:
+        
+        username = session['username']
+        if validate_password(username, curr_pass) != True:
             flash("Current password was incorrect", "error")
             return redirect(url_for("userprofile"))
         else :
-            update_password(user[0][1], new_pass)
+            update_password(username, new_pass)
             flash("Password changed successfully", "success")
             return redirect(url_for("userprofile"))
         
@@ -419,8 +414,8 @@ def change_email():
         data = request.form
         new_email = data["newEmail"] # This is defined in the input element of the HTML form on index.html
         assert new_email != "", "New email cannot be empty" # Check if the new email is empty
-        user = get_curr_user()
-        update_email(user[0][1], new_email)
+        username = session['username']
+        update_email(username, new_email)
         flash("Email changed successfully", "success")
         return redirect(url_for("userprofile"))
         
