@@ -41,11 +41,11 @@
                     {% endif %}
                 </tr>
                 <tr>
-                    <td colspan="6">Factions:</td>
+                    <td colspan="6" style="text-align: center;">Factions:</td>
                 </tr>
                 <tr>
                     {% if FacLen == 0 %}
-                    <td colspan="6">No factions have a presence here.</td>
+                    <td colspan="6" style="text-align: center;">No factions have a presence here.</td>
                     {% else %}
                     {% for faction in factions %}
                     {% if faction[0] % 6 == 0 and faction[0] != 0 %}
