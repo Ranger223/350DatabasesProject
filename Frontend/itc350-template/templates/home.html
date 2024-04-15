@@ -13,6 +13,20 @@
 
     <div class ="body">
         <h2> All Planets </h2>
-        <!--Table with all Planets here. See other systemview.html for reference-->
+        <table>
+            <tr>
+                <th>Orbital System</th>
+                <th>Planet</th>
+                <th>Type</th>
+            </tr>
+            <!-- This is some python jinja2 code. Only existing items will be displayed. -->
+            {% for item in data %}
+            <tr>
+                <td> <a href=" {{'/systemview/%s'%item[1]}} ">{{item[3]}}</a> </td>
+                <td> <a href=" {{'/celbody/%s'%item[0]}} ">{{item[2]}}</a> </td>
+                <td> {{item[4]}} </td>
+            </tr>
+            {% endfor %}
+        </table>
     </div>
 </body>

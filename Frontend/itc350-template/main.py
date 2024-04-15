@@ -206,6 +206,14 @@ def end_session():
     session.clear()
     return "success"
   
+def all_body_view():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT CelBodyID, OrbSysID, CelBodyName, OrbSysName, CelBodyTypeName FROM CelBodyView;")
+    result = cursor.fetchall()
+    conn.close()
+    return result
+
 # ------------------------ END FUNCTIONS ------------------------ #
 
 
@@ -220,8 +228,9 @@ def celbodyview(celbodyid):
 #show all planets
 @app.route("/", methods=["GET"])
 def home():
-    #I reccommend making a function like the ones above to get all planets
-    return render_template("home.html")
+    #I recommend making a function like the ones above to get all planets
+    data = all_body_view()
+    return render_template("home.html", data=data)
 
 @app.route("/user", methods=["GET"])
 def userprofile():
