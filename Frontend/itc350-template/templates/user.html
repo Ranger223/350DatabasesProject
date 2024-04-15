@@ -25,45 +25,49 @@
     {% endwith %}
 
     <div class ="body">
-        <table style="float:left;width:15%">
+    
+        <div style="width:80%; text-align: center; float:left;">
+            <div class="user-form">
+                <h1 class="center">Welcome {{user[1]}}!</h2>
+                
+                <h2>Email: {{user[2]}}</h2>
+                <h2>Faction: {{userFac[0]}}</h2>
+                <h2>Clearance Level: {{user[4]}}</h2>
+                <h2>Change Password:</h2>
+                <form action="/update-password" method="post">
+                    <!-- Name -->
+                    <label for="currPass">Current Password:</label>
+                    <input type="password" id="currPass" name="currPass" required>
+                    <br>
+                    <!-- Quantity -->
+                    <label for="newPass">New Password:</label>
+                    <input type="password" id="newPass" name="newPass" required>
+                    <br>
+                    <!-- Submit Button -->
+                    <input style="margin-left: 4em;" type="submit" value="Submit">
+                </form>
+
+                <h2>Change Email:</h2>
+                <form action="/update-email" method="post">
+                    <label for="newEmail">New Email:</label>
+                    <input type="text" id="newEmail" name="newEmail" required>
+                    <br>
+                    <!-- Submit Button -->
+                    <input style="margin-left: 4em;" type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+
+        <table style="float:right;width:15%">
             <tr>
-                <th>Factions</th>
+                <th style="text-align: center; width:100%;">Factions</th>
             </tr>
             {% for faction in factions %}
                 <tr>
-                    <td><a href="/joinFaction/{{faction[0]}}">{{faction[1]}}</a></td>
+                    <td class="tableButton"><a href="/joinFaction/{{faction[0]}}"><div>{{faction[1]}}</div></a></td>
                 </tr>
             {% endfor %}    
         </table>
-        <div style="width:85%; text-align: center;">
-            <h1 class="center">Welcome {{user[1]}}!</h2>
-        
-            <h2>Email: {{user[2]}}</h2>
-            <h2>Faction: {{userFac[0]}}</h2>
-            <h2>Clearance Level: {{user[4]}}</h2>
-            <h2>Change Password:</h2>
-            <form action="/update-password" method="post">
-                <!-- Name -->
-                <label for="currPass">Current Password:</label>
-                <input type="password" id="currPass" name="currPass" required>
-                <br>
-                <!-- Quantity -->
-                <label for="newPass">New Password:</label>
-                <input type="password" id="newPass" name="newPass" required>
-                <br>
-                <!-- Submit Button -->
-                <input style="margin-left: 4em;" type="submit" value="Submit">
-            </form>
-
-            <h2>Change Email:</h2>
-            <form action="/update-email" method="post">
-                <label for="newEmail">New Email:</label>
-                <input type="text" id="newEmail" name="newEmail" required>
-                <br>
-                <!-- Submit Button -->
-                <input style="margin-left: 4em;" type="submit" value="Submit">
-            </form>
-        </div>
     </div>
     
 </body>

@@ -16,6 +16,18 @@ body {
     border-radius: 3px;
 }
 
+.user-form {
+    text-align: left;
+    width: 40%;
+    margin: auto;
+    margin-top: 10%;
+    width:40%;
+    background-color: rgba(44, 44, 78, 0.8);
+    padding-top: 10px;
+    padding-bottom: 45px;
+    border-radius: 3px;
+}
+
 .login {
     position: sticky;
     top: 0;
