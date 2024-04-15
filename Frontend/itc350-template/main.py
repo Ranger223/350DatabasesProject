@@ -116,7 +116,7 @@ def get_curr_user_fac(user):
     FacID = user[5]
     if FacID == None:
         FacID = 0
-    cursor.execute("SELECT FactionName FROM FACTION WHERE FacID=%d;", (FacID))
+    cursor.execute("SELECT FactionName FROM FACTION WHERE FacID=%s;", (FacID,))
     result = cursor.fetchall()
     conn.close()
     return result
@@ -284,7 +284,7 @@ def unsaveplanet(celbodyid):
 @app.route("/celbody/<celbodyid>", methods=["GET"])
 def celbodyview(celbodyid):
     data = cel_body_view(celbodyid)
-    print(data[-1])
+    #print(data[-1])
     return render_template("celbodyview.html", item = data[0], saved = data[1], factions=enumerate(data[2]), FacLen=len(data[2]))
 
 #show all planets
@@ -299,11 +299,11 @@ def userprofile():
     if len(session) == 0:
         return redirect(url_for("getlogin"))
     user = get_curr_user()[0] # Call defined function to get all items
-    print(user)
+    #print(user)
     
-    print(user[5])
+    #print(user[5])
     userFac = get_curr_user_fac(user)
-    print(userFac)
+    #print(userFac)
     return render_template("user.html", user=user, userFac = userFac[0]) # Return the page to be rendered
 
 #shows a user's saved planets
