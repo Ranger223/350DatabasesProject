@@ -116,7 +116,7 @@ def get_curr_user_fac(user):
     FacID = user[5]
     if FacID == None:
         FacID = 0
-    cursor.execute("SELECT FactionName FROM FACTION WHERE FacID=%d;", (FacID))
+    cursor.execute("SELECT FactionName FROM FACTION WHERE FacID=%s;", (FacID))
     result = cursor.fetchall()
     conn.close()
     return result
@@ -254,12 +254,32 @@ def unsave_planet(UID, CelBodyID):
     except Exception as e:
         print(e)
         return 0
-    
+
+def join_faction(UID, FacID):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("UPDATE DBUSER SET FacID = %s WHERE UID = %s", (FacID, UID))
+        conn.commit()
+        conn.close()
+        return 1
+    except Exception as e:
+        print(e)
+        return 0
+
 # ------------------------ END FUNCTIONS ------------------------ #
 
 
 # ------------------------ BEGIN ROUTES ------------------------ #
 # EXAMPLE OF GET REQUEST
+
+@app.route("/joinFaction/<facID>", methods=["GET"])
+def joinFaction(facID):
+    if(session['userID'] == None):
+        return redirect(url_for("getlogin"))
+    UID = session['userID']
+    join_faction(UID, facID)
+    return redirect(url_for("userprofile"))
 
 @app.route("/save/<celbodyid>", methods=["GET"])
 def saveplanet(celbodyid):
