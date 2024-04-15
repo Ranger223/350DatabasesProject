@@ -294,6 +294,8 @@ def home():
 
 @app.route("/user", methods=["GET"])
 def userprofile():
+    if len(session) == 0:
+        return redirect(url_for("getlogin"))
     user = get_curr_user()[0] # Call defined function to get all items
     print(user)
     
