@@ -262,9 +262,10 @@ def loginview():
     username = data["username"]
     password = data["password"]
     if login_user(username, password):
-        return render_template("userplanets.html")
+        return redirect(url_for("usersaved"))
     else:
-        return render_template("home.html")
+        flash("Incorrect Login", "error")
+        return redirect(url_for("getlogin"))
     
 @app.route("/logout", methods=["GET"])
 def logout():
@@ -277,8 +278,10 @@ def registeruser():
     username = data["username"]
     password = data["password"]
     email = data["email"]
-    register_user(username, password, email)
-    return render_template("userplanets.html")
+    if register_user(username, password, email):
+        return redirect(url_for("home"))
+    else:
+        return redirect(url_for("getregister"))
 
 @app.route("/register", methods=["GET"])
 def getregister():
@@ -296,7 +299,8 @@ def change_password():
         data = request.form
         curr_pass = data["currPass"] # This is defined in the input element of the HTML form on index.html
         new_pass = data["newPass"] # This is defined in the input element of the HTML form on index.html
-
+        assert curr_pass != "", "Current password cannot be empty" # Check if the current password is empty
+        assert new_pass != "", "New password cannot be empty" # Check if the new password is empty
         user = get_curr_user()
         if validate_password(user[0][1], curr_pass) != True:
             flash("Current password was incorrect", "error")
@@ -317,6 +321,7 @@ def change_email():
         # Get items from the form
         data = request.form
         new_email = data["newEmail"] # This is defined in the input element of the HTML form on index.html
+        assert new_email != "", "New email cannot be empty" # Check if the new email is empty
         user = get_curr_user()
         update_email(user[0][1], new_email)
         flash("Email changed successfully", "success")

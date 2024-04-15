@@ -44,6 +44,7 @@ body {
     font-size: 18px;
     width: 15em;
     background: linear-gradient(to bottom, #181820, #1d1d2f);
+    height:30%;
 }
 
 .navbar {

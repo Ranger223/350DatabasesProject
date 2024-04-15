@@ -7,12 +7,22 @@
 </head>
 <body>
   {% include 'background.html' %}
+  <!-- Show error or success messages if there are any -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  <!-- Check to see if there are any messages to show -->
+    {% if messages %}
+      {% for category, message in messages %}
+          <p class="alert {{ category }}">{{ message }}</p>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
   <div class="login-form">
     <form action="/loggering" method="post">
       <h1>Login</h1>
       <div>
-        <input type="text" id="username" name="username" placeholder="Username">
-        <input type="password" id="password" name="password" placeholder="Password">
+        <input type="text" id="username" name="username" placeholder="Username" required>
+        <input type="password" id="password" name="password" placeholder="Password" required>
       </div>
       <button type="submit" style="width:100%;height:85%;">
         <div class="navbar" style="width:100%;height:85%;">
