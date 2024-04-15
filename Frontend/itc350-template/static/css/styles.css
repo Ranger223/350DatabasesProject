@@ -59,6 +59,10 @@ body {
     height:30%;
 }
 
+form input[type=text], form input[type=password], form input[type=email] {
+    color:#7777ff;
+}
+
 .navbar {
     position: sticky;
     top: 0;
