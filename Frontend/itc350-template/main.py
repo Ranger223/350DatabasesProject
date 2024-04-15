@@ -145,12 +145,15 @@ def cel_body_view(celbodyid):
     cursor = conn.cursor()
     cursor.execute("SELECT CelBodyID, OrbSysID, CelBodyName, OrbSysName, Mass, Radius, OrbitalDistance, OrbSysName, CelBodyTypeName, HabName, Colonizable FROM CelBodyView WHERE CelBodyID=%s;", (celbodyid,))
     result = cursor.fetchall()
-    cursor.execute ("SELECT * FROM SAVED WHERE UID = %s AND CelBodyID = %s", (session['userID'], celbodyid))
-    data = cursor.fetchall()
-    if not data:
-        result.append( False )
+    if len(session) != 0:
+        cursor.execute ("SELECT * FROM SAVED WHERE UID = %s AND CelBodyID = %s", (session['userID'], celbodyid))
+        data = cursor.fetchall()
+        if not data:
+            result.append( False )
+        else:
+            result.append( True )
     else:
-        result.append( True )
+        result.append( False )
     conn.close()
     return result
 
