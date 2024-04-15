@@ -56,7 +56,7 @@ def get_system_view(systemid):
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    query = "SELECT CelBodyID, CelBodyName, Mass, Radius, CelBodyTypeName, HabName, Colonizable, FactionName, OrbSysName FROM OrbSysView WHERE OrbSysID=%s" 
+    query = "SELECT CelBodyID, CelBodyName, Mass, Radius, CelBodyTypeName, HabName, Colonizable, OrbSysName FROM OrbSysView WHERE OrbSysID=%s" 
     cursor.execute(query,(systemid))
     result = cursor.fetchall()
     conn.close()
@@ -81,7 +81,7 @@ def get_all_planets():
 def get_saved_planets(uid):
     conn = get_db_connection()
     cursor = conn.cursor()
-    query = "SELECT CelBodyID, OrbSysID, CelBodyName, OrbSysName, CelBodyTypeName, HabName, Colonizable, FactionName FROM UserSavedView WHERE UID=%s"
+    query = "SELECT CelBodyID, OrbSysID, CelBodyName, OrbSysName, CelBodyTypeName, HabName FROM UserSavedView WHERE UID=%s"
     cursor.execute(query,(uid))
     result = cursor.fetchall()
     conn.close()
@@ -234,9 +234,13 @@ def home():
 
 @app.route("/user", methods=["GET"])
 def userprofile():
-    user = get_curr_user() # Call defined function to get all items
-    userFac = get_curr_user_fac(user[0])
-    return render_template("user.html", user=user[0], userFac = userFac[0]) # Return the page to be rendered
+    user = get_curr_user()[0] # Call defined function to get all items
+    print(user)
+    
+    print(user[5])
+    userFac = get_curr_user_fac(user)
+    print(userFac)
+    return render_template("user.html", user=user, userFac = userFac[0]) # Return the page to be rendered
 
 #shows a user's saved planets
 @app.route("/saved", methods=["GET"])

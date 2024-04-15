@@ -13,7 +13,7 @@
     {% include 'navBar.html' %}
 
     <div class="body">
-            <h2> {{items[0][8]}} System </h2>
+            <h2> {{items[0][7]}} System </h2>
             <table>
                 <tr>
                     <th>Planet</th>
@@ -22,7 +22,6 @@
                     <th>Type</th>
                     <th>Habitability</th>   
                     <th>Colonizable</th>
-                    <th>Faction</th>
                 </tr>
                 <!-- This is some python jinja2 code. Only existing items will be displayed. -->
                 {% for item in items %}
@@ -33,7 +32,6 @@
                     <td> {{item[4]}} </td>
                     <td> {{item[5]}} </td>
                     <td> {{item[6]}} </td>
-                    <td> {{item[7]}} </td>
                 </tr>
                 {% endfor %}
             </table>
