@@ -100,7 +100,7 @@ def get_faction_planets(faction):
 def get_curr_user():
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM DBUSER WHERE Username=%s;", ("funkyspacesattellite",))
+    cursor.execute("SELECT * FROM DBUSER WHERE UID=%s;", (session['userID'],))
     result = cursor.fetchall()
     conn.close()
     return result
