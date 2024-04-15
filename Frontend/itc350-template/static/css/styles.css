@@ -87,8 +87,20 @@ body {
     text-decoration: none;
 }
 
-.navbar a:hover {
+.navbar a:hover, td a div:hover {
     background: linear-gradient(to bottom, #343440, #444450);
+}
+
+td a div {
+    height:100%;
+    width:100%;
+    padding:15px 0px 15px 0px;
+    margin:0;
+    background: linear-gradient(to bottom, #2d2d3f, #282830);
+}
+
+.tableButton{
+    text-align:center;height:100%;padding:0;
 }
 
 .navRight{

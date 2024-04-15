@@ -35,9 +35,9 @@
                 </tr>
                 <tr>
                     {% if session['userID'] and not saved: %}
-                    <td colspan="6"><a href="/save/{{item[0]}}">Save</a></td>
+                    <td colspan="6" class="tableButton"><a href="/save/{{item[0]}}"><div>Save</div></a></td>
                     {% elif session['userID'] and saved: %}
-                    <td colspan="6"><a href="/unsave/{{item[0]}}">Unsave</a></td>
+                    <td colspan="6" class="tableButton"><a href="/unsave/{{item[0]}}"><div>Unsave</div></a></td>
                     {% endif %}
                 </tr>
             </table>
