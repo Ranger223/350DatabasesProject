@@ -172,7 +172,7 @@ input::placeholder, textarea::placeholder {
 
 input:focus, textarea:focus, select:focus {
     outline: none;
-    background-color: #808080;
+    background-color: #2d2d3f;
 }
 
 table {
