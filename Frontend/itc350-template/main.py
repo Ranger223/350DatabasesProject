@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory
 import pymssql
 from dotenv import load_dotenv
 import bcrypt
@@ -440,9 +440,16 @@ def search():
     search = data.get("search")
     items = get_search_results(search)
     return render_template("searchresults.html", items=items)
+
+
+@app.route('/favicon.ico')
+def favicon():
+    print (os.path.join(app.root_path, 'static'))
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+        'favicon.ico',mimetype='image/vnd-microsoft.icon')
 # ------------------------ END ROUTES ------------------------ #
 
 
 # listen on port 8080
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8080, debug=True) # TODO: Students PLEASE remove debug=True when you deploy this for production!!!!!
+    app.run(host='0.0.0.0', port=8080, debug=False) # TODO: Students PLEASE remove debug=True when you deploy this for production!!!!!
