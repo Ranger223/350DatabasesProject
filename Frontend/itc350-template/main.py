@@ -69,7 +69,7 @@ def get_all_planets():
 def get_saved_planets(uid):
     conn = get_db_connection()
     cursor = conn.cursor()
-    query = "SELECT CelBodyID, OrbSysID, CelBodyName, OrbSysName, CelBodyTypeName, HabName FROM UserSavedView WHERE UID=%s"
+    query = "SELECT CelBodyID, OrbSysID, CelBodyName, OrbSysName, CelBodyTypeName, HabName, Colonizable FROM UserSavedView WHERE UID=%s"
     cursor.execute(query,(uid))
     result = cursor.fetchall()
     conn.close()
@@ -84,7 +84,6 @@ def get_faction_planets(faction):
     cursor.execute("SELECT FactionName FROM FACTION WHERE FacID=%d;", (faction))
     result.append(cursor.fetchall())
     conn.close()
-    print(result)
     return result
 
 #get current user
@@ -444,7 +443,6 @@ def search():
 
 @app.route('/favicon.ico')
 def favicon():
-    print (os.path.join(app.root_path, 'static'))
     return send_from_directory(os.path.join(app.root_path, 'static'),
         'favicon.ico',mimetype='image/vnd-microsoft.icon')
 # ------------------------ END ROUTES ------------------------ #
