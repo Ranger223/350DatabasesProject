@@ -331,6 +331,8 @@ def userprofile():
 #shows a user's saved planets
 @app.route("/saved", methods=["GET"])
 def usersaved():
+    if len(session) == 0:
+        return redirect(url_for("getlogin"))
     user = get_curr_user()
     UID = session['userID']
     data = get_saved_planets(UID)
