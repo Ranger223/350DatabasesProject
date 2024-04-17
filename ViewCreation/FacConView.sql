@@ -1,7 +1,7 @@
 USE [CBIS]
 GO
 
-/****** Object:  View [dbo].[FacConView]    Script Date: 4/4/2024 1:34:04 PM ******/
+/****** Object:  View [dbo].[FacConView]    Script Date: 4/17/2024 9:54:22 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -11,7 +11,7 @@ GO
 CREATE VIEW [dbo].[FacConView]
 AS
 SELECT        dbo.FACTION.FactionName, dbo.ORBITALSYSTEM.OrbSysName, dbo.CELESTIALBODY.CelBodyName, dbo.CELESTIALBODY.Mass, dbo.CELESTIALBODY.Radius, dbo.CELESTIALBODY.OrbitalDistance, 
-                         dbo.CelBodTYPE.CelBodyTypeName, dbo.HABITABILITY.HabName, dbo.HABITABILITY.Colonizable
+                         dbo.CelBodTYPE.CelBodyTypeName, dbo.HABITABILITY.HabName, dbo.HABITABILITY.Colonizable, dbo.CELESTIALBODY.CelBodyID, dbo.FACTION.FacID, dbo.ORBITALSYSTEM.OrbSysID
 FROM            dbo.CelBodTYPE INNER JOIN
                          dbo.CELESTIALBODY ON dbo.CelBodTYPE.CelBodyTypeID = dbo.CELESTIALBODY.CelBodyTypeID INNER JOIN
                          dbo.HABITABILITY ON dbo.CelBodTYPE.HabID = dbo.HABITABILITY.HabID INNER JOIN
@@ -95,60 +95,60 @@ Begin DesignProperties =
       Begin Tables = 
          Begin Table = "CelBodTYPE"
             Begin Extent = 
-               Top = 57
-               Left = 683
-               Bottom = 170
-               Right = 873
+               Top = 115
+               Left = 766
+               Bottom = 228
+               Right = 956
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "CELESTIALBODY"
             Begin Extent = 
-               Top = 6
-               Left = 454
-               Bottom = 136
-               Right = 624
+               Top = 61
+               Left = 509
+               Bottom = 191
+               Right = 679
             End
             DisplayFlags = 280
-            TopColumn = 3
+            TopColumn = 2
          End
          Begin Table = "HABITABILITY"
             Begin Extent = 
-               Top = 102
-               Left = 38
-               Bottom = 215
-               Right = 208
+               Top = 150
+               Left = 1163
+               Bottom = 263
+               Right = 1333
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "FACTION"
             Begin Extent = 
-               Top = 6
-               Left = 38
-               Bottom = 102
-               Right = 208
+               Top = 43
+               Left = 36
+               Bottom = 139
+               Right = 206
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "FACTIONCONTROLS"
             Begin Extent = 
-               Top = 6
-               Left = 246
-               Bottom = 102
-               Right = 416
+               Top = 43
+               Left = 255
+               Bottom = 139
+               Right = 425
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "ORBITALSYSTEM"
             Begin Extent = 
-               Top = 219
-               Left = 8
-               Bottom = 332
-               Right = 178
+               Top = 206
+               Left = 282
+               Bottom = 319
+               Right = 452
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -160,13 +160,16 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 9
+      Begin ColumnWidths = 12
          Width = 284
-         Width = 1500
-     ' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'FacConView'
+         Width = 1' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'FacConView'
 GO
 
-EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane2', @value=N'    Width = 1500
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane2', @value=N'500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
          Width = 1500
          Width = 1500
          Width = 1500

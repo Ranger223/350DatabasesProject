@@ -1,7 +1,7 @@
 USE [CBIS]
 GO
 
-/****** Object:  View [dbo].[CelBodyView]    Script Date: 4/4/2024 1:34:14 PM ******/
+/****** Object:  View [dbo].[CelBodyView]    Script Date: 4/17/2024 9:54:32 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -11,14 +11,11 @@ GO
 CREATE VIEW [dbo].[CelBodyView]
 AS
 SELECT        dbo.CELESTIALBODY.CelBodyName, dbo.CELESTIALBODY.Mass, dbo.CELESTIALBODY.Radius, dbo.CELESTIALBODY.OrbitalDistance, dbo.ORBITALSYSTEM.OrbSysName, dbo.CelBodTYPE.CelBodyTypeName, 
-                         dbo.HABITABILITY.HabName, dbo.HABITABILITY.Colonizable, (CASE WHEN dbo.FACTION.FactionName IS NULL THEN 'Independent' ELSE dbo.FACTION.FactionName END) AS Expr1
+                         dbo.HABITABILITY.HabName, dbo.HABITABILITY.Colonizable, dbo.CELESTIALBODY.CelBodyID, dbo.ORBITALSYSTEM.OrbSysID
 FROM            dbo.CelBodTYPE INNER JOIN
                          dbo.HABITABILITY ON dbo.CelBodTYPE.HabID = dbo.HABITABILITY.HabID RIGHT OUTER JOIN
                          dbo.CELESTIALBODY ON dbo.CelBodTYPE.CelBodyTypeID = dbo.CELESTIALBODY.CelBodyTypeID LEFT OUTER JOIN
-                         dbo.ORBITALSYSTEM ON dbo.CELESTIALBODY.OSystemID = dbo.ORBITALSYSTEM.OrbSysID LEFT OUTER JOIN
-                         dbo.FACTION INNER JOIN
-                         dbo.FACTIONCONTROLS ON dbo.FACTION.FacID = dbo.FACTIONCONTROLS.FacID AND dbo.FACTION.FacID = dbo.FACTIONCONTROLS.FacID ON dbo.CELESTIALBODY.CelBodyID = dbo.FACTIONCONTROLS.CBID AND 
-                         dbo.CELESTIALBODY.CelBodyID = dbo.FACTIONCONTROLS.CBID
+                         dbo.ORBITALSYSTEM ON dbo.CELESTIALBODY.OSystemID = dbo.ORBITALSYSTEM.OrbSysID
 WHERE        (dbo.CELESTIALBODY.CelBodyID <> 0)
 GO
 
@@ -125,30 +122,10 @@ Begin DesignProperties =
          End
          Begin Table = "ORBITALSYSTEM"
             Begin Extent = 
-               Top = 259
-               Left = 13
-               Bottom = 372
-               Right = 183
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "FACTION"
-            Begin Extent = 
-               Top = 18
-               Left = 478
-               Bottom = 114
-               Right = 648
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "FACTIONCONTROLS"
-            Begin Extent = 
-               Top = 6
-               Left = 246
-               Bottom = 102
-               Right = 416
+               Top = 194
+               Left = 19
+               Bottom = 307
+               Right = 189
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -160,13 +137,10 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 10
+      Begin ColumnWidths = 12
          Width = 284
          Width = 1500
-' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'CelBodyView'
-GO
-
-EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane2', @value=N'         Width = 1500
+         Width = 1500
          Width = 1500
          Width = 1500
          Width = 1500
@@ -174,6 +148,8 @@ EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane2', @value=N'         Widt
          Width = 1500
          Width = 1500
          Width = 2385
+         Width = 1500
+         Width = 1500
       End
    End
    Begin CriteriaPane = 
@@ -187,7 +163,10 @@ EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane2', @value=N'         Widt
          SortType = 1350
          SortOrder = 1410
          GroupBy = 1350
-         Filter = 1350
+    ' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'CelBodyView'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane2', @value=N'     Filter = 1350
          Or = 1350
          Or = 1350
          Or = 1350
